@@ -80,4 +80,14 @@ export const LoginButton = styled.button`
 
 export const RegisterDiv = styled.div`
     margin-top: 1rem;
+
+    span {
+        color: #7475c4;
+        transition: all .3s ease;
+    }
+
+    span:hover{
+        color: #525399;
+        transition: all .3s ease;
+    }
 `

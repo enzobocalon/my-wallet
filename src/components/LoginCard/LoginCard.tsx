@@ -1,6 +1,7 @@
 import React, { FC, useRef } from 'react'
 import * as S from './style'
 import {MdEmail, MdPassword} from 'react-icons/md'
+import { Link } from 'react-router-dom';
 
 const LoginCard: FC = () => {
     const email= useRef<HTMLInputElement | null>(null);
@@ -48,7 +49,10 @@ const LoginCard: FC = () => {
             </S.LoginButton>
 
             <S.RegisterDiv>
-                Don't have an account yet? Register now!
+                Don't have an account yet? 
+                <Link to='/register'>
+                <span> Register now!</span>
+                </Link>
             </S.RegisterDiv>
 
         </S.Card>
