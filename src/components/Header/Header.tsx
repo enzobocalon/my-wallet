@@ -10,7 +10,9 @@ const Header:FC = () => {
             <h1>My Wallet</h1>
             <div>
                 <ul>
-                    <li>Home</li>
+                    <Link to ='/'>
+                        <li>Home</li>
+                    </Link>
                     <li>About Us</li>
                     <li>Contact</li>
                 </ul>
@@ -19,9 +21,11 @@ const Header:FC = () => {
 
         <S.HeaderSecondCol>
             <Link to = '/login'>
-                <button>Login</button>
+                <S.LoginButton>Login</S.LoginButton>
             </Link>
-            <button>Register</button>
+            <Link to = '/register'>
+                <button>Register</button>
+            </Link>
         </S.HeaderSecondCol>
 
     </S.HeaderWrapper>

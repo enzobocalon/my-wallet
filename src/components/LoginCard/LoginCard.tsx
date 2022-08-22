@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { FC } from 'react'
 import * as S from './style'
 import {MdEmail, MdPassword} from 'react-icons/md'
 
-const LoginCard = () => {
+const LoginCard: FC = () => {
   return (
     <S.LoginWrapper>
         <S.Card>

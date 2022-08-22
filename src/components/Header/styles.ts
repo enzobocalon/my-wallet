@@ -27,25 +27,23 @@ export const HeaderSecondCol = styled.div`
     align-items: center;
     gap: 2rem;
 
-    button:first-child {
-        background-color: #525399;
-        color: white;
-        width: 100px;
-        height: 45px;
-        cursor: pointer;
-        border: none;
-        border-radius: 15px;
-        transition: all .3s ease-in;
-    }
-
-    button:first-child:hover{
-        opacity: .9;
-        transition: all .3s ease-in;
-    }
-
     button {
+        color: white;
         background-color: transparent;
         border: none;
-        color: white;
+        cursor: pointer;
     }
+`
+
+export const LoginButton = styled.button`
+        background-color: #525399 !important;
+        width: 100px;
+        height: 45px;
+        border-radius: 15px;
+        transition: all .3s ease-in;
+
+        &:hover{
+        opacity: .9;
+        transition: all .3s ease-in;
+        }
 `
