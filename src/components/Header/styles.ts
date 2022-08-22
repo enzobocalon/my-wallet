@@ -4,8 +4,9 @@ export const HeaderWrapper = styled.header`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: .5rem 2rem;
+    padding: 1rem 2rem;
     width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 `
 
 export const HeaderFirstCol = styled.div`
@@ -34,6 +35,12 @@ export const HeaderSecondCol = styled.div`
         cursor: pointer;
         border: none;
         border-radius: 15px;
+        transition: all .3s ease-in;
+    }
+
+    button:first-child:hover{
+        opacity: .9;
+        transition: all .3s ease-in;
     }
 
     button {

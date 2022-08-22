@@ -48,6 +48,12 @@ export const LeftContainer = styled.div`
         margin-top: 2rem;
         border-radius: 20px;
         cursor: pointer;
+        transition: all .3s ease-in;
+    }
+
+    button:hover{
+        opacity: .9;
+        transition: all .3s ease-in;
     }
 `
 
