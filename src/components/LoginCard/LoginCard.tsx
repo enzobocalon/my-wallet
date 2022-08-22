@@ -51,7 +51,7 @@ const LoginCard: FC = () => {
             <S.RegisterDiv>
                 Don't have an account yet? 
                 <Link to='/register'>
-                <span> Register now!</span>
+                    <span> Register now!</span>
                 </Link>
             </S.RegisterDiv>
 
