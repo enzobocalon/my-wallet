@@ -4,6 +4,8 @@ import {IoMdWallet} from 'react-icons/io'
 import {MdOutlineMoneyOff} from 'react-icons/md'
 import {AiOutlineSafety} from 'react-icons/ai'
 
+import { Link } from 'react-router-dom'
+
 import mainImage from '../../assets/image.png'
 
 const HomePageContainer = () => {
@@ -27,7 +29,9 @@ const HomePageContainer = () => {
                     </li>
                 </ul>
 
+                <Link to ='/register'>
                 <button>Register now!</button>
+                </Link>
             </S.LeftContainer>
 
             <S.RightContainer>
