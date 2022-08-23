@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, FC } from 'react'
 import * as S from './style'
 
 import {GoHome} from 'react-icons/go'
@@ -10,54 +10,58 @@ import {AiOutlineUser} from 'react-icons/ai'
 
 import { Link } from 'react-router-dom'
 
-const DashboardSidebar = () => {
+const DashboardSidebar:FC = () => {
+    const [sidebar, setSidebar] = useState<boolean>(false);
+
   return (
-    <S.SidebarContainer>
+    <S.SidebarContainer active={sidebar}>
         <S.LogoContent>
-            <S.Logo>
+            <S.Logo active={sidebar}>
                 <span id="logo-i">MW</span>
-                <S.LogoName>
+                <S.LogoName active={sidebar}>
                     My Wallet
                 </S.LogoName>
             </S.Logo>
 
-            <IoMdMenu id='menu'/>
+            <IoMdMenu id='menu' onClick = {() => {
+                setSidebar(prev => !prev);
+            }}/>
 
         </S.LogoContent>
-        <S.ulMenu>
+        <S.ulMenu active={sidebar}>
             <li>
                 <Link to = '/'>
                     <GoHome />
                     <span>Dashboard</span>
                 </Link>
-                {/* <span className='tooltip'>Dashboard</span> */}
+                <span className='tooltip'>Dashboard</span>
             </li>
             <li>
                 <Link to = '/'>
                     <GiReceiveMoney />
                     <span>Expenses</span>
                 </Link>
-                {/* <span className='tooltip'>Transactions</span> */}
+                <span className='tooltip'>Expenses</span>
             </li>
             <li>
                 <Link to = '/'>
                     <BiTransferAlt />
                     <span>Transfers</span>
                 </Link>
-                {/* <span className='tooltip'>Transfers</span> */}
+                <span className='tooltip'>Transfers</span>
             </li>
             <li>
                 <Link to = '/'>
                     <AiOutlineUser />
                     <span>Profile</span>
                 </Link>
-                {/* <span className='tooltip'>Profile</span> */}
+                <span className='tooltip'>Profile</span>
             </li>
         </S.ulMenu>
 
         <S.profileContent>
-            <S.Profile>
-                <S.ProfileDetails>
+            <S.Profile active={sidebar}>
+                <S.ProfileDetails active={sidebar}>
                     <img src = '' alt = '' />
                     <S.nameJob>
                         <S.Name>Placeholder</S.Name>
