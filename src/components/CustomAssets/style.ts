@@ -55,4 +55,8 @@ export const Asset = styled.div`
         align-items: center;
         gap: 2rem;
     }
+
+    .add {
+        cursor: pointer;
+    }
 `

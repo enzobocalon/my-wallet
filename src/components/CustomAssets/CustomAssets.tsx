@@ -30,7 +30,7 @@ const CustomAssets = () => {
               </div>
               <div>
                 <span>4500</span>
-                <MdAddCircle size={20}/>
+                <MdAddCircle size={20} className='add'/>
               </div>
             </S.Asset>
 
@@ -41,7 +41,7 @@ const CustomAssets = () => {
               </div>
               <div>
                 <span>2000</span>
-                <MdAddCircle size={20}/>
+                <MdAddCircle size={20} className='add'/>
               </div>
             </S.Asset>
 
@@ -52,7 +52,7 @@ const CustomAssets = () => {
               </div>
               <div>
                 <span>0.1</span>
-                <MdAddCircle size={20}/>
+                <MdAddCircle size={20} className='add'/>
               </div>
             </S.Asset>
 
@@ -63,7 +63,7 @@ const CustomAssets = () => {
               </div>
               <div>
                 <span>1.4</span>
-                <MdAddCircle size={20}/>
+                <MdAddCircle size={20} className='add'/>
               </div>
             </S.Asset>
 
