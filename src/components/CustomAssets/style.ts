@@ -18,4 +18,41 @@ export const Container = styled.div`
         justify-content: center;
         align-items: center;
     }
+    `
+export const AssetContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    
+`
+export const Assets = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+
+    div {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    svg#kpl{
+        visibility: hidden;
+    }
+`
+
+export const Asset = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    border-top: 2px solid #2C2F37;
+    border-radius: 1px;
+    padding-top: 10px;
+
+    div {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+    }
 `
