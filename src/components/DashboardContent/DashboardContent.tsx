@@ -23,7 +23,8 @@ const DashboardContent: FC = () => {
           <CustomAssets />
         </S.DashboardAlign>
         
-      </S.SiderbarMargin> 
+        <span style={{marginTop: "1rem"}}>Dashboard v0.1 - Alpha</span>
+      </S.SiderbarMargin>
     </S.Container>
   )
 }

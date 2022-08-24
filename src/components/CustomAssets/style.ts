@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 export const Container = styled.div`
     width: 40%;
-    min-height: 40vh;
-    margin-top: 2rem;
+    min-height: fit-content;
+    max-height: 40vh;
     background-color: #1f1d2c;
     padding: 1.4rem;
     border-radius: 12px;

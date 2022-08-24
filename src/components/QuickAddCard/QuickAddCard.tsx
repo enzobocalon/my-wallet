@@ -11,8 +11,8 @@ const QuickAddCard = () => {
         <S.AddContainer>
             <p>Choose the type of transaction!</p>
             <div>
-                <span><input type='radio' name='option'/>Earnings</span>
-                <span><input type='radio' name='option'/>Costs</span>
+                <span><input type='radio' name='option'/>Incomings</span>
+                <span><input type='radio' name='option'/>Expenses</span>
             </div>
 
             <p>Amount</p>
