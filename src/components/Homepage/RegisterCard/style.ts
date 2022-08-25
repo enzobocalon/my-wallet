@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import background from '../../assets/registerbg.svg'
+import background from '../../../assets/registerbg.svg'
 
 export const RegisterWrapper = styled.main`
     z-index: 0;

@@ -6,7 +6,7 @@ import {AiOutlineSafety} from 'react-icons/ai'
 
 import { Link } from 'react-router-dom'
 
-import mainImage from '../../assets/image.png'
+import mainImage from '../../../assets/image.png'
 
 const HomePageContainer = () => {
   return (

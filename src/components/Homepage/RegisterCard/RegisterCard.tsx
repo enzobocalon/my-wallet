@@ -6,8 +6,8 @@ import { Link } from 'react-router-dom'
 import {MdEmail, MdPassword} from 'react-icons/md'
 import {AiOutlineUser} from 'react-icons/ai'
 
-import illustration1 from '../../assets/register.svg'
-import illustration2 from '../../assets/register2.svg'
+import illustration1 from '../../../assets/register.svg'
+import illustration2 from '../../../assets/register2.svg'
 
 const RegisterCard = () => {
   return (

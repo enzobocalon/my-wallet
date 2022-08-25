@@ -1,6 +1,6 @@
 import React from 'react'
-import Header from '../../components/Header/Header'
-import RegisterCard from '../../components/RegisterCard/RegisterCard'
+import Header from '../../components/Homepage/Header/Header'
+import RegisterCard from '../../components/Homepage/RegisterCard/RegisterCard'
 
 const Register = () => {
   return (
