@@ -2,7 +2,7 @@ import { Box, Grid } from '@mui/material'
 import React from 'react'
 import DashboardHeader from '../DashboardModules/DashboardHeader/DashboardHeader'
 import MyBalance from '../DashboardModules/MyBalance/MyBalance'
-import MyInfos from '../DashboardModules/MyInfos/MyInfos'
+import Infos from '../DashboardModules/CurrentlyInfos/Infos'
 import DashboardSidebar from '../DashboardSidebar/DashboardSidebar'
 import * as S from './style'
 
@@ -12,14 +12,14 @@ const MainContent = () => {
         <DashboardSidebar />
       <Box sx={{ flexGrow: 1 }}>
         <Grid container >
-          <Grid xs={12}>
+          <Grid xs={12} sx={{marginBottom: '1rem'}}>
             <DashboardHeader />
           </Grid>
-          <Grid xs={3} sx ={{marginRight: '2rem'}}>
+          <Grid xs={3} sx={{marginRight: '1rem'}}>
             <MyBalance/>
           </Grid>
           <Grid xs={8}>
-            <MyInfos />
+            <Infos/>
           </Grid>
         </Grid>   
       </Box>

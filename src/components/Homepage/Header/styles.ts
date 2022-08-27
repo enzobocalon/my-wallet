@@ -14,6 +14,9 @@ export const HeaderFirstCol = styled.div`
     display: flex;
     align-items: center;
     gap: 4rem;
+    img{
+        width: 200px;
+    }
 
     ul{
         display: flex;

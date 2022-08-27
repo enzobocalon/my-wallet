@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
 import * as S from './style'
 
+import logo from '../../../assets/logo.svg'
+
 import {MdDashboard} from 'react-icons/md'
 import {BiTransferAlt, BiLogOut} from 'react-icons/bi'
 import {AiOutlineUser} from 'react-icons/ai'
@@ -11,7 +13,7 @@ const DashboardSidebar = () => {
         <S.MenuContainer>
             <S.DashboardCol>
                 <S.LogoRow>
-                    <h1>My Wallet</h1>
+                    <img src={logo} />
                 </S.LogoRow>
                 <S.MenuAlign>
                     <S.MenuRow active={true}>

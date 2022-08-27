@@ -1,50 +1,37 @@
 import styled from 'styled-components'
+import bg from '../../../../assets/ccbg.svg'
 
 export const Container = styled.div`
-    margin-top: 1rem;
-    background-color: #2F303E;
+    background-image: url(${bg});
+    background-size: cover;
     border-radius: 12px;
     width: 100%;
+    height: 200px;
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
     gap: 1rem;
     padding: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+
+    h1{
+        font-size: 2rem;
+    }
 `
 
-export const ContainerRow = styled.div`
+export const CCFooter = styled.div`
     display: flex;
-    width: 100%;
+    align-items: center;
     justify-content: space-between;
-    p{
-        font-size: 1.5rem;
-        font-weight: 500;
+
+    div {
+        display: flex;
+        align-items: center;
+        gap: .8rem;
     }
-`
 
-export const ButtonAdd = styled.div`
-    background-color: #525399;
-    border-radius: 12px;
-    padding: 1rem;
-    cursor: pointer;
-    opacity: 1;
-    transition: all .3s ease;
-
-    &:hover{
-        opacity: .9;
-    }
-`
-
-export const ButtonCheck = styled.div`
-    padding: 1rem;
-    background-color: white;
-    color: #525399;
-    border-radius: 12px;
-    font-size: 500;
-    cursor: pointer;
-    opacity: 1;
-    transition: all .3s ease;
-
-    &:hover{
-        opacity: .9;
+    img{
+        width: 10%;
     }
 `

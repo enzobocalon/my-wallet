@@ -1,13 +1,14 @@
 import React, {FC} from 'react'
 import {Link} from 'react-router-dom'
 import * as S from './styles'
+import logo from '../../../assets/logo.svg'
 
 const Header:FC = () => {
   return (
     <S.HeaderWrapper>
 
         <S.HeaderFirstCol>
-            <h1>My Wallet</h1>
+            <img src={logo} />
             <div>
                 <ul>
                     <Link to ='/'>

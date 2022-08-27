@@ -41,9 +41,12 @@ export const DashboardCol = styled.div`
 
 export const LogoRow = styled.div`
     text-align: center;
-    h1{
-        max-width: 100%;
-        font-size: 1.4rem;
+    height: 100px;
+    width: 100%;
+    img{
+        width: 100%;
+        height: 100%;
+        transform: scale(1.4);
     }
     `
 

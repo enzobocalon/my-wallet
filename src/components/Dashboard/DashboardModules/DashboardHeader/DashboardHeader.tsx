@@ -14,7 +14,7 @@ const DashboardHeader = () => {
   return (
     <S.Container>
         <div>
-            <h1>Overview</h1>
+            <h1>Dashboard</h1>
         </div>
 
         <S.MenuItems>

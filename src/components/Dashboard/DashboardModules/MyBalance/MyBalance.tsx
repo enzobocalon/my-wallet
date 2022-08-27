@@ -1,19 +1,21 @@
 import React from 'react'
 import * as S from './style'
+import icon from '../../../../assets/icon.svg'
 
 const MyBalance = () => {
   return (
     <S.Container>
-        <S.ContainerRow>
-          <span>Your Balance</span>
-        </S.ContainerRow>
-        <S.ContainerRow>
-          <p>$1200.00</p>
-        </S.ContainerRow>
-        <S.ContainerRow>
-          <S.ButtonAdd>Add transaction</S.ButtonAdd>
-          <S.ButtonCheck>See transactions</S.ButtonCheck>
-        </S.ContainerRow>
+      <div>
+        <span>Available Balance</span>
+        <h1>$12,234</h1>
+      </div>
+      <S.CCFooter>
+        <div>
+          <span>****</span>
+          <span>2022</span>
+        </div>
+        <img src={icon} />
+      </S.CCFooter>
     </S.Container>
   )
 }
