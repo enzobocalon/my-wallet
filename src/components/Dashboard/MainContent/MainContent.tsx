@@ -1,11 +1,14 @@
-import { Box, Grid } from '@mui/material'
 import React from 'react'
+import * as S from './style'
+
 import DashboardHeader from '../DashboardModules/DashboardHeader/DashboardHeader'
 import MyBalance from '../DashboardModules/MyBalance/MyBalance'
 import Infos from '../DashboardModules/CurrentlyInfos/Infos'
 import DashboardSidebar from '../DashboardSidebar/DashboardSidebar'
-import * as S from './style'
 import Statistics from '../DashboardModules/Statistics/Statistics'
+import TransactionsInfos from '../DashboardModules/TransactionsInfos/TransactionsInfos'
+
+import { Box, Grid } from '@mui/material'
 
 const MainContent = () => {
   return (
@@ -25,14 +28,15 @@ const MainContent = () => {
           <Grid xs={8}>
             <Infos/>
           </Grid>
-          
-          <Grid xs={4} sx={{marginTop: '1rem'}}>
+
+          <Grid xs={7} sx={{marginTop: '1rem', marginRight: '1rem'}}>
+            <TransactionsInfos />
+          </Grid>
+
+          <Grid xs={4} sx={{marginTop: '1rem', marginRight: '1rem'}}>
             <Statistics />
           </Grid>
 
-          <Grid xs={8} sx={{marginTop: '1rem'}}>
-           
-          </Grid>
         </Grid>   
       </Box>
     </S.Container>
