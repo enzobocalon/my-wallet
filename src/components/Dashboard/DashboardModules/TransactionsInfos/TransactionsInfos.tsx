@@ -2,12 +2,9 @@ import React from 'react'
 import * as S from './style'
 
 import { LinearProgress } from '@mui/material'
-import Checkbox from '@mui/material/Checkbox';
 import Tooltip from '@mui/material/Tooltip'
 
-import {MdMoreVert, MdOutlineFastfood} from 'react-icons/md'
-import {FaPlane, FaMoneyBillAlt} from 'react-icons/fa'
-import {IoLogoGameControllerB} from 'react-icons/io'
+import {MdMoreVert} from 'react-icons/md'
 
 const TransactionsInfos = () => {
   return (
