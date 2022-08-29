@@ -5,6 +5,7 @@ import { LinearProgress } from '@mui/material'
 import Tooltip from '@mui/material/Tooltip'
 
 import {MdMoreVert} from 'react-icons/md'
+import Transactions from '../Transactions/Transactions'
 
 const TransactionsInfos = () => {
   return (
@@ -34,6 +35,8 @@ const TransactionsInfos = () => {
       <S.TransactionsHeader>
         <h1>Latest Transactions</h1>
       </S.TransactionsHeader>
+      <Transactions />
+      <span id="viewTransactions">View transactions</span>
     </S.Container>
     </>
   )

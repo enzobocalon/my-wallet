@@ -7,7 +7,6 @@ import Infos from '../DashboardModules/CurrentlyInfos/Infos'
 import DashboardSidebar from '../DashboardSidebar/DashboardSidebar'
 import Statistics from '../DashboardModules/Statistics/Statistics'
 import TransactionsInfos from '../DashboardModules/TransactionsInfos/TransactionsInfos'
-
 import { Box, Grid } from '@mui/material'
 
 const MainContent = () => {
@@ -36,7 +35,6 @@ const MainContent = () => {
           <Grid xs={4} sx={{marginTop: '1rem', marginRight: '1rem'}}>
             <Statistics />
           </Grid>
-
         </Grid>   
       </Box>
     </S.Container>

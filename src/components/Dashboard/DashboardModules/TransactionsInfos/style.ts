@@ -9,6 +9,19 @@ export const Container = styled.div`
     border-radius: 12px;
     padding: .6rem 1rem;
     box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
+
+    #viewTransactions{
+        margin-top: 10px;
+        text-align: center;
+        cursor: pointer;
+        font-size: .8rem;
+        transition: all .3s ease;
+
+        &:hover{
+            color: rgb(254,97,82);
+            transition: all .3s ease;
+        }
+    }
 `
 
 export const FirstRow = styled.div`
@@ -55,5 +68,7 @@ export const CCLimitHeader = styled.div`
 
 
 export const TransactionsHeader = styled.div`
-
+    width: 100%;
+    padding-bottom: .5rem;
+    border-bottom: 1px solid #343947;
 `
