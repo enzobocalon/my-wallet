@@ -1,11 +1,18 @@
-import React, { FC, useRef } from 'react'
+import React, { FC, useRef, useContext } from 'react'
 import * as S from './style'
 import {MdEmail, MdPassword} from 'react-icons/md'
 import { Link } from 'react-router-dom';
+import { auth } from '../../../services/firebase';
+import { AuthContext } from "../../../context/UserContext"
 
-const LoginCard: FC = () => {
+
+const LoginCard: FC = () => { 
+    const { setRegistered } = useContext(AuthContext)
+    setRegistered(false);
     const email= useRef<HTMLInputElement | null>(null);
     const password = useRef<HTMLInputElement | null>(null);
+
+    console.log(auth.currentUser)
 
     const handleLogin = () => {
         console.log(email.current?.value)

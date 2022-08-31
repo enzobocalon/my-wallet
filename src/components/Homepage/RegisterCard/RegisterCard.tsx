@@ -1,7 +1,6 @@
-import React, { FC, useRef } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { FC, useRef, useContext } from "react";
+import { AuthContext } from "../../../context/UserContext";
 import * as S from "./style";
-import { auth } from "../../../services/firebase";
 
 import { Link } from "react-router-dom";
 
@@ -10,22 +9,32 @@ import { AiOutlineUser } from "react-icons/ai";
 
 import illustration1 from "../../../assets/register.svg";
 import illustration2 from "../../../assets/register2.svg";
+import { Snackbar } from "@mui/material";
 
 const RegisterCard: FC = () => {
+  const { handleRegister, registered, setRegistered } = useContext(AuthContext);
+
+  const name = useRef<HTMLInputElement | null>(null);
   const email = useRef<HTMLInputElement | null>(null);
   const password = useRef<HTMLInputElement | null>(null);
 
-  const handleRegister = async () => {
-    try {
-      if (email.current?.value && password.current?.value) {
-        await createUserWithEmailAndPassword(
-          auth,
-          email.current?.value,
-          password.current?.value
-        )
-      }
-    } catch (error) {
-      console.log(error);
+  const handleButtonClick = () => {
+    if (
+      name.current?.value &&
+      email.current?.value &&
+      password.current?.value
+    ) {
+      handleRegister(
+        name.current.value,
+        email.current.value,
+        password.current.value
+      );
+    }
+  };
+
+  const handleEnter = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === "Enter") {
+      handleButtonClick();
     }
   };
 
@@ -35,7 +44,7 @@ const RegisterCard: FC = () => {
         <img src={illustration1} id="first" alt="first bg" />
         <img src={illustration2} id="second" alt="second bg" />
 
-        <S.RegisterFields>
+        <S.RegisterFields onKeyDown={(e) => handleEnter(e)}>
           <h1>Welcome to our family!</h1>
           <span>Register now to get started. Totally free!</span>
 
@@ -43,7 +52,7 @@ const RegisterCard: FC = () => {
             <span>Your username</span>
             <div>
               <AiOutlineUser size={25} />
-              <input type="text" placeholder="e.g: Michael" />
+              <input type="text" placeholder="e.g: Michael" ref={name} />
             </div>
           </S.RegisterField>
 
@@ -67,7 +76,7 @@ const RegisterCard: FC = () => {
             </div>
           </S.RegisterField>
 
-          <S.RegisterButton onClick={handleRegister}>
+          <S.RegisterButton onClick={handleButtonClick}>
             Register now!
           </S.RegisterButton>
 
@@ -78,6 +87,15 @@ const RegisterCard: FC = () => {
             </Link>
           </S.PCustom>
         </S.RegisterFields>
+
+        <Snackbar
+          open={registered}
+          onClose={() => {
+            setRegistered(false);
+          }}
+          autoHideDuration={1000}
+          message={"Registered with success. Redirecting..."}
+        />
       </S.RegisterDiv>
     </S.RegisterWrapper>
   );
