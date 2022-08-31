@@ -9,10 +9,12 @@ export const GlobalStyle = createGlobalStyle`
         font-size: 16px;
     }
 
-    body{
+    html, body{
         height: 100vh;
         width: 100%;
         background-color: #1f1d2c;
+        overflow-x: hidden;
+        overflow-y: auto;
         color: white;
     }
 

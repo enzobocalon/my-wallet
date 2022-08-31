@@ -12,5 +12,4 @@ export const Container = styled.div`
     h1{
         font-size: 1.4rem;
     }
-
 `

@@ -31,7 +31,7 @@ const Statistics = () => {
   return (
     <S.Container>    
         <h1>Statistics</h1>
-        <Doughnut data={data}/>
+        <Doughnut data={data} options={{maintainAspectRatio: false, responsive: true}} style={{minHeight: "450px", maxHeight: "450px"}}/>
     </S.Container>
   )
 }

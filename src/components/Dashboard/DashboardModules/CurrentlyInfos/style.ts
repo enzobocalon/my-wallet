@@ -35,7 +35,10 @@ export const CurrentInfo = styled.div`
     padding-right: 2rem;
     border-right: 1px solid #525399;
     h1{
-        font-size: 2.5rem;
+        font-size: clamp(0.7rem, 0.045rem + 3.27vw, 2.5rem);
+    }
+    span{
+        font-size: clamp(0.4rem, 0.182rem + 1.09vw, 1rem);
     }
 
     &:last-of-type{

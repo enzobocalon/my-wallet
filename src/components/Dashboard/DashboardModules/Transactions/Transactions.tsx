@@ -94,22 +94,6 @@ const Transactions = () => {
             <span>+ $20,000.00</span>
         </S.TransactionRight>
     </S.Transaction>
-    <S.Transaction>
-        <S.TransactionLeft>
-            <S.TransactionIcon type={'incoming'}>
-                <RiLuggageDepositLine size={28}/>
-            </S.TransactionIcon>
-
-            <S.TransactionInfos>
-                <span>Incoming</span>
-                <span style={{"fontSize":".8rem", "fontWeight":"200"}}>2022-08-24</span>
-            </S.TransactionInfos>
-
-        </S.TransactionLeft>
-        <S.TransactionRight>
-            <span>+ $50.00</span>
-        </S.TransactionRight>
-    </S.Transaction>
 
     </S.TransactionContainer>
   )

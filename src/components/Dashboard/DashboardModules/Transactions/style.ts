@@ -7,8 +7,8 @@ interface IProps {
 export const TransactionContainer = styled.div`
     display: flex;
     flex-direction: column;
-    height: fit-content;
-    max-height: 420px;
+    min-height: fit-content;
+    max-height: 400px;
 `
 
 export const Transaction = styled.div`
