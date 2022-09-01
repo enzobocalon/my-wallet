@@ -1,4 +1,4 @@
-import { FC, useRef, useContext } from "react";
+import { FC, useRef, useContext, useState } from "react";
 import { AuthContext } from "../../../context/UserContext";
 import * as S from "./style";
 
@@ -11,6 +11,9 @@ import illustration1 from "../../../assets/register.svg";
 import illustration2 from "../../../assets/register2.svg";
 import { Snackbar } from "@mui/material";
 
+import { fetchSignInMethodsForEmail } from "firebase/auth";
+import { auth } from '../../../services/firebase'
+
 const RegisterCard: FC = () => {
   const { handleRegister, registered, setRegistered } = useContext(AuthContext);
 
@@ -18,19 +21,53 @@ const RegisterCard: FC = () => {
   const email = useRef<HTMLInputElement | null>(null);
   const password = useRef<HTMLInputElement | null>(null);
 
+  const emailRegex = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/
+
+  const [emailError, setEmailError] = useState<string | null>(null);
+  const [userError, setUserError] = useState<string | null>(null);
+  const [passwordError, setPasswordError] = useState<string | null>(null);
+
   const navigate = useNavigate();
 
-  const handleButtonClick = () => {
-    if (
-      name.current?.value &&
-      email.current?.value &&
-      password.current?.value
-    ) {
-      handleRegister(
-        name.current.value,
-        email.current.value,
-        password.current.value
-      );
+  const handleButtonClick = async () => {
+    if (name.current?.value &&
+        email.current?.value &&
+        email.current?.value.match(emailRegex) &&
+        password.current?.value &&
+        password.current?.value.length >= 6) {
+          setUserError(null);
+          setPasswordError(null);
+          setEmailError(null);
+        await fetchSignInMethodsForEmail(auth, email.current.value).then((status) => {
+          if (!status.length){
+            handleRegister(name.current!.value, email.current!.value, password.current!.value);
+          } else {
+            setEmailError('Email already registered.')
+          }
+        })
+    } else {
+
+      if (!name.current?.value.length) {
+        setUserError('Username field cannot be empty.')
+      } else {
+        setUserError(null);
+      }
+
+      if (!email.current?.value.length){
+        setEmailError('Email field cannot be empty.')
+      } else if(!email.current.value.match(emailRegex)) {
+        setEmailError('Please insert a valid email type.')
+      } else {
+        setEmailError(null)
+      }
+      
+      if (!password.current?.value.length){
+        setPasswordError('Password field cannot be empty.')
+      } else if (password.current.value.length < 6) {
+        setPasswordError('Password must have at least 6 characters.');
+      } else {
+        setPasswordError(null);
+      }
     }
   };
 
@@ -56,6 +93,7 @@ const RegisterCard: FC = () => {
               <AiOutlineUser size={25} />
               <input type="text" placeholder="e.g: Michael" ref={name} />
             </div>
+            <S.Error>{userError}</S.Error>
           </S.RegisterField>
 
           <S.RegisterField>
@@ -64,6 +102,7 @@ const RegisterCard: FC = () => {
               <MdEmail size={25} />
               <input type="email" placeholder="email@email.com" ref={email} />
             </div>
+              <S.Error>{emailError}</S.Error>
           </S.RegisterField>
 
           <S.RegisterField>
@@ -76,6 +115,7 @@ const RegisterCard: FC = () => {
                 ref={password}
               />
             </div>
+            <S.Error>{passwordError}</S.Error>
           </S.RegisterField>
 
           <S.RegisterButton onClick={handleButtonClick}>
