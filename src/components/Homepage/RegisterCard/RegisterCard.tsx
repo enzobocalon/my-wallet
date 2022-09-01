@@ -2,7 +2,7 @@ import { FC, useRef, useContext } from "react";
 import { AuthContext } from "../../../context/UserContext";
 import * as S from "./style";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { MdEmail, MdPassword } from "react-icons/md";
 import { AiOutlineUser } from "react-icons/ai";
@@ -17,6 +17,8 @@ const RegisterCard: FC = () => {
   const name = useRef<HTMLInputElement | null>(null);
   const email = useRef<HTMLInputElement | null>(null);
   const password = useRef<HTMLInputElement | null>(null);
+
+  const navigate = useNavigate();
 
   const handleButtonClick = () => {
     if (
@@ -91,6 +93,7 @@ const RegisterCard: FC = () => {
         <Snackbar
           open={registered}
           onClose={() => {
+            navigate('/login')
             setRegistered(false);
           }}
           autoHideDuration={1000}

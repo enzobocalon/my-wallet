@@ -37,6 +37,11 @@ export const HeaderSecondCol = styled.div`
         border: none;
         cursor: pointer;
     }
+    img{
+        height: 50px;
+        width: 50px;
+        border-radius: 12px;
+    }
 `
 
 export const LoginButton = styled.button`
@@ -50,4 +55,17 @@ export const LoginButton = styled.button`
         opacity: .9;
         transition: all .3s ease-in;
         }
+`
+
+export const AlreadyLoggenIn = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    div {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+    }
 `

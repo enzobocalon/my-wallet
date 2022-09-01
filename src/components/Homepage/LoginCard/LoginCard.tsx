@@ -7,21 +7,27 @@ import { AuthContext } from "../../../context/UserContext"
 
 
 const LoginCard: FC = () => { 
-    const { setRegistered } = useContext(AuthContext)
+    const { handleLogin, setRegistered } = useContext(AuthContext)
     setRegistered(false);
+
     const email= useRef<HTMLInputElement | null>(null);
     const password = useRef<HTMLInputElement | null>(null);
 
-    console.log(auth.currentUser)
+   const handleClickButton = () => {
+        if (email.current?.value && password.current?.value) {
+            handleLogin(email.current.value, password.current.value);
+        }
+   }
 
-    const handleLogin = () => {
-        console.log(email.current?.value)
-        console.log(password.current?.value)
+   const handleEnter = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === "Enter") {
+        handleClickButton();
     }
+  };
 
   return (
     <S.LoginWrapper>
-        <S.Card>
+        <S.Card onKeyDown={(e) => handleEnter(e)}>
             <S.HeaderDiv>
                 <h1>Nice to see you again!</h1>
                 <span>Login to access your account.</span>
@@ -51,7 +57,7 @@ const LoginCard: FC = () => {
                 <span>Forgot your password?</span>
             </S.RememberMeDiv>
 
-            <S.LoginButton onClick = {handleLogin}>
+            <S.LoginButton onClick = {handleClickButton}>
                 Login!
             </S.LoginButton>
 

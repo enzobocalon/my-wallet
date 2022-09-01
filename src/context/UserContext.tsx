@@ -2,8 +2,11 @@ import { createContext, useState, useCallback, useEffect } from 'react'
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut,
   updateProfile,
   User,
+  UserCredential
 } from 'firebase/auth'
 
 import { auth } from '../services/firebase'
@@ -14,11 +17,14 @@ type AuthContextProps = {
   user: User | null
   registered: boolean
   setRegistered: React.Dispatch<React.SetStateAction<boolean>>
+  handleLogin: (email: string, password: string) => Promise<void>
+  handleLogout: () => void
 }
 
 type AuthProviderProps = {
   children: React.ReactNode
 }
+
 
 export const AuthContext = createContext({} as AuthContextProps)
 
@@ -36,7 +42,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
               displayName: name
             })
             setRegistered(true)
-            navigate('/login');
           })
         }
       } catch (error) {
@@ -46,6 +51,26 @@ export function AuthProvider({ children }: AuthProviderProps) {
     [navigate]
   )
   
+  const handleLogin = useCallback(
+    async(email: string, password: string) => {
+      try {
+        if (email && password) {
+          await signInWithEmailAndPassword(auth, email, password).then(() => {
+            navigate('./dashboard')
+          })
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }, [navigate])
+
+    const handleLogout = useCallback(() => {
+      signOut(auth).then(() => {
+        navigate('/')
+        setUser(null);
+      });
+    },
+    [navigate])
 
   useEffect(() => {
     setRegistered(false);
@@ -62,7 +87,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
         handleRegister,
         user,
         registered,
-        setRegistered
+        setRegistered,
+        handleLogin,
+        handleLogout
       }}
     >
       {children}
