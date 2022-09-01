@@ -5,8 +5,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
-  User,
-  UserCredential
+  User
 } from 'firebase/auth'
 
 import { auth } from '../services/firebase'
