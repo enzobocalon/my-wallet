@@ -9,7 +9,7 @@ import {
 } from 'firebase/auth'
 
 import { auth } from '../services/firebase'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 type AuthContextProps = {
   handleRegister: (name: string, email: string, password: string) => Promise<void>
@@ -28,6 +28,7 @@ type AuthProviderProps = {
 export const AuthContext = createContext({} as AuthContextProps)
 
 export function AuthProvider({ children }: AuthProviderProps) {
+  const location = useLocation();
   const [user, setUser] = useState<User | null>(null)
   const [registered, setRegistered] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -76,6 +77,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
     onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         setUser(currentUser)
+      }
+
+      // AuthGuard
+      if(!currentUser && location.pathname === '/dashboard'){
+        navigate('/login');
       }
     })
   }, [])

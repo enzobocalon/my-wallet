@@ -1,18 +1,18 @@
 import { FC, useRef, useContext, useState } from "react";
-import { AuthContext } from "../../../context/UserContext";
+import { Link, useNavigate } from "react-router-dom";
 import * as S from "./style";
 
-import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../context/UserContext";
+import { fetchSignInMethodsForEmail } from "firebase/auth";
+import { auth } from '../../../services/firebase'
 
 import { MdEmail, MdPassword } from "react-icons/md";
 import { AiOutlineUser } from "react-icons/ai";
 
 import illustration1 from "../../../assets/register.svg";
 import illustration2 from "../../../assets/register2.svg";
-import { Snackbar } from "@mui/material";
 
-import { fetchSignInMethodsForEmail } from "firebase/auth";
-import { auth } from '../../../services/firebase'
+import { Snackbar } from "@mui/material";
 
 const RegisterCard: FC = () => {
   const { handleRegister, registered, setRegistered } = useContext(AuthContext);
@@ -35,9 +35,11 @@ const RegisterCard: FC = () => {
         email.current?.value.match(emailRegex) &&
         password.current?.value &&
         password.current?.value.length >= 6) {
+
           setUserError(null);
           setPasswordError(null);
           setEmailError(null);
+
         await fetchSignInMethodsForEmail(auth, email.current.value).then((status) => {
           if (!status.length){
             handleRegister(name.current!.value, email.current!.value, password.current!.value);
@@ -45,8 +47,8 @@ const RegisterCard: FC = () => {
             setEmailError('Email already registered.')
           }
         })
-    } else {
 
+    } else {
       if (!name.current?.value.length) {
         setUserError('Username field cannot be empty.')
       } else {
@@ -60,7 +62,7 @@ const RegisterCard: FC = () => {
       } else {
         setEmailError(null)
       }
-      
+
       if (!password.current?.value.length){
         setPasswordError('Password field cannot be empty.')
       } else if (password.current.value.length < 6) {
