@@ -17,6 +17,8 @@ type AuthContextProps = {
   handleRegister: (name: string, email: string, password: string) => Promise<void>
   user: User | null
   registered: boolean
+  loggedIn: boolean | null
+  setLoggedIn: React.Dispatch<React.SetStateAction<boolean | null>>
   setRegistered: React.Dispatch<React.SetStateAction<boolean>>
   handleLogin: (email: string, password: string, rememberMe: boolean) => Promise<void>
   handleLogout: () => void
@@ -33,6 +35,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const location = useLocation();
   const [user, setUser] = useState<User | null>(null)
   const [registered, setRegistered] = useState<boolean>(false);
+  const [loggedIn, setLoggedIn] = useState<boolean | null>(null);
   const navigate = useNavigate();
 
   const handleRegister = useCallback(
@@ -59,13 +62,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
         if (email && password) {
           await signInWithEmailAndPassword(auth, email, password).then(() => {
             auth.setPersistence(rememberMe ? browserLocalPersistence : browserSessionPersistence)
-            navigate('./dashboard')
+            setLoggedIn(true)
           })
         }
       } catch (error) {
-        console.log(error)
+        setLoggedIn(false)
       }
-    }, [navigate])
+    }, [])
 
     const handleLogout = useCallback(() => {
       signOut(auth).then(() => {
@@ -86,6 +89,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
       if(!currentUser && location.pathname === '/dashboard'){
         navigate('/login');
       }
+
+      if (currentUser && location.pathname === '/login'){
+        navigate('/dashboard')
+      }
     })
   }, [location.pathname, navigate])
 
@@ -97,7 +104,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
         registered,
         setRegistered,
         handleLogin,
-        handleLogout
+        handleLogout,
+        loggedIn,
+        setLoggedIn
       }}
     >
       {children}

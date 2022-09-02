@@ -91,3 +91,11 @@ export const RegisterDiv = styled.div`
         transition: all .3s ease;
     }
 `
+
+export const Error = styled.span`
+    font-size: 12px;
+    text-align: center;
+    width: 100%;
+    color: red;
+    margin-top: 5px;
+`

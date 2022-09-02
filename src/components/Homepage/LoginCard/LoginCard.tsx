@@ -1,22 +1,24 @@
-import React, { FC, useRef, useContext } from 'react'
+import React, { FC, useRef, useContext, useState } from 'react'
 import * as S from './style'
 import {MdEmail, MdPassword} from 'react-icons/md'
-import { Link } from 'react-router-dom';
-import { auth } from '../../../services/firebase';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from "../../../context/UserContext"
 
+import { Snackbar } from "@mui/material";
 
 const LoginCard: FC = () => { 
-    const { handleLogin, setRegistered } = useContext(AuthContext)
+    const { handleLogin, setRegistered, loggedIn, setLoggedIn } = useContext(AuthContext)
     setRegistered(false);
     
     const email= useRef<HTMLInputElement | null>(null);
     const password = useRef<HTMLInputElement | null>(null);
     const rememberMe = useRef<HTMLInputElement | null >(null);
 
+    const navigate = useNavigate();
+
    const handleClickButton = () => {
         if (email.current?.value && password.current?.value) {
-            handleLogin(email.current.value, password.current.value, rememberMe.current!.checked);
+            handleLogin(email.current.value, password.current.value, rememberMe.current!.checked)
         }
    }
 
@@ -49,6 +51,7 @@ const LoginCard: FC = () => {
                     <MdPassword size={25}/>
                     <input placeholder='Insert your password here...' ref={password} type='password'/>
                 </div>    
+                <S.Error>{loggedIn === false ? 'User or password wrong.' : ''}</S.Error>
             </S.InputFields>
 
             <S.RememberMeDiv>
@@ -68,8 +71,16 @@ const LoginCard: FC = () => {
                     <span> Register now!</span>
                 </Link>
             </S.RegisterDiv>
-
         </S.Card>
+        <Snackbar
+          open={loggedIn!}
+          onClose={() => {
+            navigate('/dashboard')
+            setLoggedIn(null);
+          }}
+          autoHideDuration={2000}
+          message={"Logged in. Redirecting..."}
+        />
     </S.LoginWrapper>
   )
 }
