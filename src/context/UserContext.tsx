@@ -90,7 +90,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         navigate('/login');
       }
 
-      if (currentUser && location.pathname === '/login'){
+      if (currentUser && (location.pathname === '/login' || location.pathname === '/register')){
         navigate('/dashboard')
       }
     })
