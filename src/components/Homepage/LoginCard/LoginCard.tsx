@@ -78,7 +78,7 @@ const LoginCard: FC = () => {
             navigate('/dashboard')
             setLoggedIn(null);
           }}
-          autoHideDuration={2000}
+          autoHideDuration={1000}
           message={"Logged in. Redirecting..."}
         />
     </S.LoginWrapper>
