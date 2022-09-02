@@ -9,13 +9,14 @@ import { AuthContext } from "../../../context/UserContext"
 const LoginCard: FC = () => { 
     const { handleLogin, setRegistered } = useContext(AuthContext)
     setRegistered(false);
-
+    
     const email= useRef<HTMLInputElement | null>(null);
     const password = useRef<HTMLInputElement | null>(null);
+    const rememberMe = useRef<HTMLInputElement | null >(null);
 
    const handleClickButton = () => {
         if (email.current?.value && password.current?.value) {
-            handleLogin(email.current.value, password.current.value);
+            handleLogin(email.current.value, password.current.value, rememberMe.current!.checked);
         }
    }
 
@@ -52,7 +53,7 @@ const LoginCard: FC = () => {
 
             <S.RememberMeDiv>
                 <div>
-                    <input type='checkbox'/> <span>Remember me!</span>
+                    <input type='checkbox' ref={rememberMe}/> <span>Remember me!</span>
                 </div>
                 <span>Forgot your password?</span>
             </S.RememberMeDiv>

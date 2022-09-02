@@ -5,7 +5,9 @@ import {
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
-  User
+  User,
+  browserSessionPersistence,
+  browserLocalPersistence
 } from 'firebase/auth'
 
 import { auth } from '../services/firebase'
@@ -16,7 +18,7 @@ type AuthContextProps = {
   user: User | null
   registered: boolean
   setRegistered: React.Dispatch<React.SetStateAction<boolean>>
-  handleLogin: (email: string, password: string) => Promise<void>
+  handleLogin: (email: string, password: string, rememberMe: boolean) => Promise<void>
   handleLogout: () => void
 }
 
@@ -48,14 +50,15 @@ export function AuthProvider({ children }: AuthProviderProps) {
         console.log(error)
       }
     },
-    [navigate]
+    []
   )
   
   const handleLogin = useCallback(
-    async(email: string, password: string) => {
+    async(email: string, password: string, rememberMe: boolean) => {
       try {
         if (email && password) {
           await signInWithEmailAndPassword(auth, email, password).then(() => {
+            auth.setPersistence(rememberMe ? browserLocalPersistence : browserSessionPersistence)
             navigate('./dashboard')
           })
         }
@@ -84,7 +87,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         navigate('/login');
       }
     })
-  }, [])
+  }, [location.pathname, navigate])
 
   return (
     <AuthContext.Provider
