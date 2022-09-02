@@ -90,7 +90,17 @@ export const MenuRow = styled.div<IProps>`
 `
 
 export const Logout = styled.div`
-    svg{
-        cursor: pointer;
+    height: 50px;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: all .3s ease;
+
+    &:hover{
+        background-color: #272836;
+        transition: all .3s ease;
     }
 `
