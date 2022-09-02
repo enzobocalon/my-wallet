@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useContext} from 'react'
 import * as S from './style'
 
 import logo from '../../../assets/logo.svg'
@@ -6,9 +6,12 @@ import logo from '../../../assets/logo.svg'
 import {MdDashboard} from 'react-icons/md'
 import {BiTransferAlt, BiLogOut} from 'react-icons/bi'
 import {AiOutlineUser} from 'react-icons/ai'
+import { AuthContext } from '../../../context/UserContext'
 
 const DashboardSidebar = () => {
-  return (
+    const {handleLogout} = useContext(AuthContext)
+    
+    return (
     <S.Container>
         <S.MenuContainer>
             <S.DashboardCol>
@@ -30,7 +33,7 @@ const DashboardSidebar = () => {
                     </S.MenuRow>
                 </S.MenuAlign>
             </S.DashboardCol>
-            <S.Logout>
+            <S.Logout onClick={handleLogout}>
                 <BiLogOut size={28}/>
             </S.Logout>
         </S.MenuContainer>
