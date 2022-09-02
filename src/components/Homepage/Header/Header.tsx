@@ -28,16 +28,16 @@ const Header:FC = () => {
         user ?
         (<S.HeaderSecondCol style={{"gap":"1rem"}}>
             <img src={placeholderprofile} />
-            <S.AlreadyLoggenIn>
+            <S.AlreadyLoggedIn>
                 <span>Welcome back, {user.displayName}</span>
 
                 <div>
                 <Link to='/dashboard'>
-                    <button>Dashboard</button>
+                    <button id="dashboard">Dashboard</button>
                 </Link>
-                <BiLogOut style={{"cursor":"pointer"}} onClick={handleLogout}/>
+                    <BiLogOut style={{"cursor":"pointer"}} onClick={handleLogout}/>
                 </div>
-            </S.AlreadyLoggenIn>
+            </S.AlreadyLoggedIn>
         </S.HeaderSecondCol>)
         :
         (<S.HeaderSecondCol>

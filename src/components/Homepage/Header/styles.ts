@@ -57,15 +57,32 @@ export const LoginButton = styled.button`
         }
 `
 
-export const AlreadyLoggenIn = styled.div`
+export const AlreadyLoggedIn = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    border-top: 3px solid transparent;
 
     div {
         display: flex;
         width: 100%;
         justify-content: space-between;
         align-items: center;
+    }
+
+    #dashboard{
+        border-bottom: 3px solid transparent;
+    }
+
+    #dashboard:after{
+        content: "";
+        display: block;
+        transform: scaleX(0);
+        border-bottom: 3px solid #525399;
+        transition: all .3s ease;
+    }
+    #dashboard:hover:after{
+        transform: scaleX(1);
+        transition: all .3s ease;
     }
 `
