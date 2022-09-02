@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import {useState, useContext} from 'react'
 import * as S from './style'
 
 import placeholder from '../../../../assets/placeholderprofile.jpg'
@@ -7,9 +7,12 @@ import {RiArrowDropDownLine} from 'react-icons/ri'
 import {MdNotifications} from 'react-icons/md'
 import {AiOutlineUser} from 'react-icons/ai'
 import {BiLogOut} from 'react-icons/bi'
+import { AuthContext } from '../../../../context/UserContext'
 
 const DashboardHeader = () => {
     const [profileModal, setProfileModal] = useState<boolean>(false);
+
+    const {handleLogout, user} = useContext(AuthContext)
 
   return (
     <S.Container>
@@ -23,10 +26,10 @@ const DashboardHeader = () => {
                 <img src={placeholder} />
                 <div>
                     <p>
-                        Placeholder
+                        {user?.displayName}
                     </p>
                     <span>
-                        Placeholder@placeholder.com
+                        {user?.email}
                     </span>
                 </div>
                 <RiArrowDropDownLine size={20} onClick = {() => setProfileModal(prev => !prev)} id='profileArrow'/>
@@ -39,7 +42,7 @@ const DashboardHeader = () => {
                         <span>Profile</span>
                     </S.PMItem>
 
-                    <S.PMItem>
+                    <S.PMItem onClick={handleLogout}>
                         <BiLogOut size={20}/>
                         <span>Logout</span>
                     </S.PMItem>
