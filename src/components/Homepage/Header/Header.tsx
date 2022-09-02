@@ -5,7 +5,6 @@ import logo from '../../../assets/logo.svg'
 import { BiLogOut } from 'react-icons/bi'
 import placeholderprofile from '../../../assets/placeholderprofile.jpg'
 import { AuthContext } from "../../../context/UserContext"
-import { auth } from '../../../services/firebase'
 
 const Header:FC = () => {
     const { user, handleLogout } = useContext(AuthContext)
