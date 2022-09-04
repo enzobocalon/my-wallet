@@ -1,5 +1,5 @@
 import { FC, useRef, useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import * as S from "./style";
 
 import { AuthContext } from "../../../context/UserContext";
@@ -26,8 +26,6 @@ const RegisterCard: FC = () => {
   const [emailError, setEmailError] = useState<string | null>(null);
   const [userError, setUserError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
-
-  const navigate = useNavigate();
 
   const handleButtonClick = async () => {
     if (name.current?.value &&
@@ -135,7 +133,6 @@ const RegisterCard: FC = () => {
         <Snackbar
           open={registered}
           onClose={() => {
-            navigate('/login')
             setRegistered(false);
           }}
           autoHideDuration={1000}

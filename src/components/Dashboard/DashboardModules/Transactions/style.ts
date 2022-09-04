@@ -28,7 +28,7 @@ export const TransactionIcon = styled.div<IProps>`
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: ${props => props.type === 'expenses' ? "#FE4267" : "#226FEE"};
+    background-color: ${props => props.type === 'incoming' ? "#226FEE" : "#FE4267"};
     border-radius: 12px;
     height: 50px;
     width: 50px;

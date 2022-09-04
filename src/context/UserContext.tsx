@@ -7,10 +7,13 @@ import {
   updateProfile,
   User,
   browserSessionPersistence,
-  browserLocalPersistence
+  browserLocalPersistence,
+  updateCurrentUser
 } from 'firebase/auth'
+ 
+import { collection, addDoc} from 'firebase/firestore'
+import { auth, db } from '../services/firebase'
 
-import { auth } from '../services/firebase'
 import { useNavigate, useLocation } from "react-router-dom";
 
 type AuthContextProps = {
@@ -32,11 +35,15 @@ type AuthProviderProps = {
 export const AuthContext = createContext({} as AuthContextProps)
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const location = useLocation();
+
   const [user, setUser] = useState<User | null>(null)
   const [registered, setRegistered] = useState<boolean>(false);
   const [loggedIn, setLoggedIn] = useState<boolean | null>(null);
+
+  const usersCollections = collection(db, 'users');
+
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleRegister = useCallback(
     async (name: string, email: string, password: string) => {
@@ -46,6 +53,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
             updateProfile(currentUser.user, {
               displayName: name
             })
+            // addDoc(usersCollections, {userId: currentUser.user.uid, creditLimit: 0})
             setRegistered(true)
           })
         }
@@ -84,7 +92,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
       if (currentUser) {
         setUser(currentUser)
       }
-
       // AuthGuard
       if(!currentUser && location.pathname === '/dashboard'){
         navigate('/login');
@@ -94,6 +101,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         navigate('/dashboard')
       }
     })
+
   }, [location.pathname, navigate])
 
   return (

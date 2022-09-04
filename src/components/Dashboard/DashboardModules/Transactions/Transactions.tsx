@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useContext, useEffect} from 'react'
 import * as S from './style'
 
 import {MdOutlineFastfood} from 'react-icons/md'
@@ -6,94 +6,59 @@ import {FaPlane, FaMoneyBillAlt} from 'react-icons/fa'
 import {IoLogoGameControllerB} from 'react-icons/io'
 import {RiLuggageDepositLine} from 'react-icons/ri'
 
+import { DBContext } from '../../../../context/DBContext'
+import { AuthContext } from '../../../../context/UserContext'
+import { DocumentData } from 'firebase/firestore'
+
+
 const Transactions = () => {
+    const {getTransactions, userTransactions} = useContext(DBContext)
+    const {user} = useContext(AuthContext)
+
+
+    useEffect(() => {
+        getTransactions();
+    }, [user])
+
   return (
     <S.TransactionContainer>
+    {
+
+        userTransactions ? 
+        userTransactions.slice(0, 4).map((docs: DocumentData) => {
+            const valueFormatter = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            })
+            return (  
+                    <S.Transaction>
+                    <S.TransactionLeft>
+                        <S.TransactionIcon type={docs.data().type === 'incoming' ? 'incoming' : 'expense'}>
+                            <FaMoneyBillAlt size={28}/>
+                        </S.TransactionIcon>
+            
+                        <S.TransactionInfos>
+                            <span>{docs.data().type}</span>
+                            <span style={{"fontSize":".8rem", "fontWeight":"200"}}>{docs.data().transactionData.date}</span>
+                        </S.TransactionInfos>
+            
+                    </S.TransactionLeft>
+                    <S.TransactionRight>
+                        <span>{docs.data().type === 'incoming' ? '+ ' + valueFormatter.format(docs.data().transactionData.value) : '- ' + valueFormatter.format(docs.data().transactionData.value)}</span>
+                    </S.TransactionRight>
+                </S.Transaction>   
+            )
+        })
+         : 
+        (
+            <h1>To be done!</h1>
+        )
+
+    }
     
-    <S.Transaction>
-        <S.TransactionLeft>
-            <S.TransactionIcon type={'expenses'}>
-                <FaMoneyBillAlt size={28}/>
-            </S.TransactionIcon>
 
-            <S.TransactionInfos>
-                <span>Bills</span>
-                <span style={{"fontSize":".8rem", "fontWeight":"200"}}>2022-08-28</span>
-            </S.TransactionInfos>
-
-        </S.TransactionLeft>
-        <S.TransactionRight>
-            <span>- $2,000.00</span>
-        </S.TransactionRight>
-    </S.Transaction>
-
-    <S.Transaction>
-        <S.TransactionLeft>
-            <S.TransactionIcon type={'expenses'}>
-                <FaPlane size={28}/>
-            </S.TransactionIcon>
-
-            <S.TransactionInfos>
-                <span>Travel</span>
-                <span style={{"fontSize":".8rem", "fontWeight":"200"}}>2022-08-27</span>
-            </S.TransactionInfos>
-
-        </S.TransactionLeft>
-        <S.TransactionRight>
-            <span>- $500.00</span>
-        </S.TransactionRight>
-    </S.Transaction>
-
-    <S.Transaction>
-        <S.TransactionLeft>
-            <S.TransactionIcon type={'expenses'}>
-                <IoLogoGameControllerB size={28}/>
-            </S.TransactionIcon>
-
-            <S.TransactionInfos>
-                <span>Fun</span>
-                <span style={{"fontSize":".8rem", "fontWeight":"200"}}>2022-08-26</span>
-            </S.TransactionInfos>
-
-        </S.TransactionLeft>
-        <S.TransactionRight>
-            <span>- $500.00</span>
-        </S.TransactionRight>
-    </S.Transaction>
-
-    <S.Transaction>
-        <S.TransactionLeft>
-            <S.TransactionIcon type={'expenses'}>
-                <MdOutlineFastfood size={28}/>
-            </S.TransactionIcon>
-
-            <S.TransactionInfos>
-                <span>Food</span>
-                <span style={{"fontSize":".8rem", "fontWeight":"200"}}>2022-08-25</span>
-            </S.TransactionInfos>
-
-        </S.TransactionLeft>
-        <S.TransactionRight>
-            <span>- $500.00</span>
-        </S.TransactionRight>
-    </S.Transaction>
-
-    <S.Transaction>
-        <S.TransactionLeft>
-            <S.TransactionIcon type={'incoming'}>
-                <RiLuggageDepositLine size={28}/>
-            </S.TransactionIcon>
-
-            <S.TransactionInfos>
-                <span>Incoming</span>
-                <span style={{"fontSize":".8rem", "fontWeight":"200"}}>2022-08-24</span>
-            </S.TransactionInfos>
-
-        </S.TransactionLeft>
-        <S.TransactionRight>
-            <span>+ $20,000.00</span>
-        </S.TransactionRight>
-    </S.Transaction>
 
     </S.TransactionContainer>
   )
