@@ -1,6 +1,6 @@
 import { createContext, useCallback, useState, useContext } from "react";
 import { db } from "../services/firebase";
-import { collection, addDoc, getDocs, query, where, DocumentData } from "firebase/firestore";
+import { collection, addDoc, getDocs, query, where, orderBy, DocumentData } from "firebase/firestore";
 import { AuthContext } from "./UserContext";
 
 type DBContextProps = {
@@ -24,16 +24,13 @@ export function DBProvider({ children }: DBProviderProps) {
 
   const getTransactions = useCallback(async () => {
     if (user) {
-      const data = query(transactions, where('userId', '==', user.uid))
+      const data = query(transactions, where('userId', '==', user.uid), orderBy('transactionData.date', 'desc'))
       await getDocs(data).then((docs) => {
+        console.log(docs.docs)
         setUserTransactions(docs.docs)
       })
     }
   }, [user])
-  
-  userTransactions?.map((doc: DocumentData) => {
-    console.log(doc.data())
-  })
   
   return (
     <DBContext.Provider

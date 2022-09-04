@@ -40,7 +40,7 @@ const Transactions = () => {
                         </S.TransactionIcon>
             
                         <S.TransactionInfos>
-                            <span>{docs.data().type}</span>
+                            <span>{docs.data().type[0].toUpperCase() + docs.data().type.slice(1)}</span>
                             <span style={{"fontSize":".8rem", "fontWeight":"200"}}>{docs.data().transactionData.date}</span>
                         </S.TransactionInfos>
             
