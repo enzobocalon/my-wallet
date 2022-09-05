@@ -43,7 +43,7 @@ export const Body = styled.div`
     margin-top: 2rem;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1.5rem;
 `
 
 export const BodyInfo = styled.div`
@@ -61,6 +61,15 @@ export const BodyInfo = styled.div`
         outline: none;
         padding: 1px 10px;
         color: #2E313E;
+    }
+
+    div{
+        display: flex;
+        flex-direction: column;
+        span{
+            font-size: .6rem;
+            color: #FE4267;
+        }
     }
 `
 

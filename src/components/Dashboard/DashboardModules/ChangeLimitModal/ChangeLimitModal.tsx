@@ -1,6 +1,7 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useContext } from "react";
 import * as S from "./style";
 import { AiOutlineClose } from "react-icons/ai";
+import { DBContext } from "../../../../context/DBContext";
 
 interface Props {
   handleModal: () => void;
@@ -14,13 +15,19 @@ const valueFormatter = new Intl.NumberFormat("en-US", {
 });
 
 const ChangeLimitModal = ({ handleModal }: Props) => {
+  const {updateLimit} = useContext(DBContext)
   const limit = useRef<HTMLInputElement | null>(null);
   const [error, setError] = useState<String | null>(null);
 
-  const handleLimit = () => {
-    if (limit) {
+  const submitData = () => {
+    if (limit.current?.value) {
+      setError(null);
+      updateLimit(limit.current.value)
+    } else {
+      setError("Please insert a valid value.")
     }
-  };
+  }
+
   return (
     <S.BlackOutLayer>
       <S.Container>
@@ -36,9 +43,12 @@ const ChangeLimitModal = ({ handleModal }: Props) => {
           </S.BodyInfo>
           <S.BodyInfo>
             <span>Your new limit:</span>
-            <input type="number" ref={limit} />
+            <div>
+              <input type="number" ref={limit} />
+              <span>{error}</span>
+            </div>
           </S.BodyInfo>
-          <S.Button>Change Limit</S.Button>
+          <S.Button onClick={submitData}>Change Limit</S.Button>
         </S.Body>
       </S.Container>
     </S.BlackOutLayer>

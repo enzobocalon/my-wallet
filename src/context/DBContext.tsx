@@ -8,6 +8,8 @@ import {
   where,
   orderBy,
   DocumentData,
+  updateDoc,
+  doc
 } from "firebase/firestore";
 import { AuthContext } from "./UserContext";
 
@@ -23,6 +25,7 @@ type DBContextProps = {
   values: Values;
   getMyBalance: () => void;
   balance: DocumentData | null;
+  updateLimit: (limit: string) => Promise<void>
 };
 
 type DBProviderProps = {
@@ -87,6 +90,12 @@ export function DBProvider({ children }: DBProviderProps) {
     }
   }, [user]);
 
+  const updateLimit = useCallback(async (limit: string) => {
+    if (user) {
+
+    }
+  }, [user])
+
   return (
     <DBContext.Provider
       value={{
@@ -96,6 +105,7 @@ export function DBProvider({ children }: DBProviderProps) {
         values,
         getMyBalance,
         balance,
+        updateLimit
       }}
     >
       {children}
