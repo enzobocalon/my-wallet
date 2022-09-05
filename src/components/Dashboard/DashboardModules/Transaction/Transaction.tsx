@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import React from "react";
 import * as S from "./style";
 
 import { MdOutlineFastfood } from "react-icons/md";
@@ -6,8 +6,6 @@ import { FaPlane, FaMoneyBillAlt } from "react-icons/fa";
 import { IoLogoGameControllerB } from "react-icons/io";
 import { RiLuggageDepositLine } from "react-icons/ri";
 
-import { DBContext } from "../../../../context/DBContext";
-import { AuthContext } from "../../../../context/UserContext";
 import { DocumentData } from "firebase/firestore";
 
 interface IProps {
@@ -22,13 +20,6 @@ const valueFormatter = new Intl.NumberFormat("en-US", {
 });
 
 const Transaction = ({ docs }: IProps) => {
-  const { getTransactions } = useContext(DBContext);
-  const { user } = useContext(AuthContext);
-
-  useEffect(() => {
-    getTransactions();
-  }, [user]);
-
   return (
     <>
       <S.Transaction>
