@@ -36,7 +36,19 @@ const Transactions = () => {
                     docs.data().type === "incoming" ? "incoming" : "expense"
                   }
                 >
-                  <FaMoneyBillAlt size={28} /> {/* to be changed */}
+                  {
+                    docs.data().type === 'incoming' ? (
+                      <RiLuggageDepositLine size={28}/>
+                    ) : docs.data().type === 'bills' ? (
+                      <FaMoneyBillAlt size={28}/>
+                    ) : docs.data().type === 'travel' ? (
+                      <FaPlane size={28}/>
+                    ) : docs.data().type === 'food' ? (
+                      <MdOutlineFastfood size={28}/>
+                    ) : (
+                      <IoLogoGameControllerB size={28}/>
+                    )
+                    }
                 </S.TransactionIcon>
 
                 <S.TransactionInfos>
