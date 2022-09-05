@@ -1,8 +1,11 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import * as S from './style'
 import icon from '../../../../assets/icon.svg'
+import { DBContext } from '../../../../context/DBContext'
 
 const MyBalance = () => {
+  const {} = useContext(DBContext)
+
   return (
     <S.Container>
       <div>

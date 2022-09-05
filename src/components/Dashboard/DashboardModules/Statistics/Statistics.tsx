@@ -1,24 +1,29 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import * as S from './style'
+import { DBContext } from '../../../../context/DBContext';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export const data = {
+const Statistics = () => {
+  const {values} = useContext(DBContext)
+
+
+const data = {
   labels: ['Expenses', 'Income', 'Balance'],
   datasets: [
     {
       label: '# of Votes',
-      data: [20000, 5000, 12234],
+      data: [values.expenses, values.incoming, 12234],
       backgroundColor: [
-        '#226FEE',
         '#FE4267',
+        '#226FEE',
         '#DDE3F4',
       ],
       borderColor: [
-        '#226FEE',
         '#FE4267',
+        '#226FEE',
         '#DDE3F4'
       ],
       borderWidth: 1,
@@ -27,7 +32,6 @@ export const data = {
 };
 
 
-const Statistics = () => {
   return (
     <S.Container>    
         <h1>Statistics</h1>

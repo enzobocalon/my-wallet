@@ -1,18 +1,27 @@
 import { createContext, useCallback, useState, useContext } from "react";
 import { db } from "../services/firebase";
-import { collection, addDoc, getDocs, query, where, orderBy, DocumentData } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  query,
+  where,
+  orderBy,
+  DocumentData,
+} from "firebase/firestore";
 import { AuthContext } from "./UserContext";
 
 interface Values {
   incoming: number;
-  expenses: number
+  expenses: number;
 }
 
 type DBContextProps = {
-  getTransactions: () => void
-  userTransactions: DocumentData | null
-  getValues: () => void
-  values: Values
+  getTransactions: () => void;
+  userTransactions: DocumentData | null;
+  getValues: () => void;
+  values: Values;
+  getMyBalance: () => void;
 };
 
 type DBProviderProps = {
@@ -23,34 +32,51 @@ export const DBContext = createContext({} as DBContextProps);
 
 export function DBProvider({ children }: DBProviderProps) {
   const { user } = useContext(AuthContext);
-  
-  const transactions = collection(db, "transactions");
 
-  const [userTransactions, setUserTransactions] = useState<DocumentData | null>(null);
+  const transactions = collection(db, "transactions");
+  const userCollections = collection(db, "users");
+
+  const [userTransactions, setUserTransactions] = useState<DocumentData | null>(
+    null
+  );
   const [values, setValues] = useState<Values>({
     incoming: 0,
-    expenses: 0
-  })
-
+    expenses: 0,
+  });
 
   const getTransactions = useCallback(async () => {
     if (user) {
-      const data = query(transactions, where('userId', '==', user.uid), orderBy('transactionData.date', 'desc'))
+      const data = query(
+        transactions,
+        where("userId", "==", user.uid),
+        orderBy("transactionData.date", "desc")
+      );
       await getDocs(data).then((docs) => {
-        setUserTransactions(docs.docs)
-      })
+        setUserTransactions(docs.docs);
+      });
     }
-  }, [user])
+  }, [user]);
 
   const getValues = useCallback(() => {
-    setValues({expenses: 0, incoming: 0})
+    setValues({ expenses: 0, incoming: 0 });
     if (userTransactions) {
       userTransactions.map((doc: DocumentData) => {
-        doc.data().type === 'incoming' ? setValues(prev => ({...prev, incoming: prev.incoming + doc.data().transactionData.value})) :
-        setValues(prev => ({...prev, expenses: prev.expenses + doc.data().transactionData.value}));
-      })
+        doc.data().type === "incoming"
+          ? setValues((prev) => ({
+              ...prev,
+              incoming: prev.incoming + doc.data().transactionData.value,
+            }))
+          : setValues((prev) => ({
+              ...prev,
+              expenses: prev.expenses + doc.data().transactionData.value,
+            }));
+      });
     }
-  }, [userTransactions])
+  }, [userTransactions]);
+
+  const getMyBalance = useCallback(() => {
+    
+  }, []);
 
   return (
     <DBContext.Provider
@@ -58,7 +84,8 @@ export function DBProvider({ children }: DBProviderProps) {
         getTransactions,
         userTransactions,
         getValues,
-        values
+        values,
+        getMyBalance,
       }}
     >
       {children}
