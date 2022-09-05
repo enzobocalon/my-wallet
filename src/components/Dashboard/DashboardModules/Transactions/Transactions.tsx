@@ -30,13 +30,13 @@ const Transactions = () => {
                 style: 'currency',
                 currency: 'USD',
                 minimumFractionDigits: 0,
-                maximumFractionDigits: 0
+                maximumFractionDigits: 2
             })
             return (  
                     <S.Transaction>
                     <S.TransactionLeft>
                         <S.TransactionIcon type={docs.data().type === 'incoming' ? 'incoming' : 'expense'}>
-                            <FaMoneyBillAlt size={28}/>
+                            <FaMoneyBillAlt size={28}/> {/* to be changed */}
                         </S.TransactionIcon>
             
                         <S.TransactionInfos>
