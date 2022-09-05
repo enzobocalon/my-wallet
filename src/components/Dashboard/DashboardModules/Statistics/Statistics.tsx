@@ -7,7 +7,7 @@ import { DBContext } from '../../../../context/DBContext';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const Statistics = () => {
-  const {values} = useContext(DBContext)
+  const {values, balance} = useContext(DBContext)
 
 
 const data = {
@@ -15,7 +15,7 @@ const data = {
   datasets: [
     {
       label: '# of Votes',
-      data: [values.expenses, values.incoming, 12234],
+      data: [values.expenses, values.incoming, balance?.balance],
       backgroundColor: [
         '#FE4267',
         '#226FEE',

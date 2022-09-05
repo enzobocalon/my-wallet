@@ -22,6 +22,7 @@ type DBContextProps = {
   getValues: () => void;
   values: Values;
   getMyBalance: () => void;
+  balance: DocumentData | null
 };
 
 type DBProviderProps = {
@@ -43,6 +44,7 @@ export function DBProvider({ children }: DBProviderProps) {
     incoming: 0,
     expenses: 0,
   });
+  const [balance, setBalance] = useState<DocumentData | null>(null)
 
   const getTransactions = useCallback(async () => {
     if (user) {
@@ -74,9 +76,16 @@ export function DBProvider({ children }: DBProviderProps) {
     }
   }, [userTransactions]);
 
-  const getMyBalance = useCallback(() => {
-    
-  }, []);
+  const getMyBalance = useCallback(async () => {
+    if (user) {
+      const data = query(userCollections, where("userId", "==", user.uid));
+      await getDocs(data).then((docs) => {
+        docs.docs.map((doc) => {
+          setBalance(doc.data())
+        })
+      });
+    }
+  }, [user]);
 
   return (
     <DBContext.Provider
@@ -86,6 +95,7 @@ export function DBProvider({ children }: DBProviderProps) {
         getValues,
         values,
         getMyBalance,
+        balance,
       }}
     >
       {children}

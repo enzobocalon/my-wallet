@@ -1,16 +1,29 @@
-import React, {useContext} from 'react'
+import React, {useContext, useEffect} from 'react'
 import * as S from './style'
 import icon from '../../../../assets/icon.svg'
 import { DBContext } from '../../../../context/DBContext'
+import { AuthContext } from '../../../../context/UserContext'
 
 const MyBalance = () => {
-  const {} = useContext(DBContext)
+  const {getMyBalance, balance} = useContext(DBContext)
+  const {user} = useContext(AuthContext)
+
+  const valueFormatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2
+})
+
+useEffect(() => {
+  getMyBalance();
+}, [user])
 
   return (
     <S.Container>
       <div>
         <span>Available Balance</span>
-        <h1>$12,234</h1>
+        <h1>{valueFormatter.format(balance?.balance)}</h1>
       </div>
       <S.CCFooter>
         <div>
