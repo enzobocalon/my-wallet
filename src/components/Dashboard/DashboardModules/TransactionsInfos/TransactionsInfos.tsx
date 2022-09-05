@@ -7,13 +7,20 @@ import Tooltip from "@mui/material/Tooltip";
 import { MdMoreVert } from "react-icons/md";
 import { FiEdit } from "react-icons/fi";
 import Transactions from "../Transactions/Transactions";
+import ChangeLimitModal from "../ChangeLimitModal/ChangeLimitModal";
 
 const TransactionsInfos = () => {
   const [ccMenu, setCCMenu] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
+
+  const handleModal = () => {
+    setShowModal((prev) => !prev);
+  };
 
   return (
     <>
       <S.Container>
+        {showModal ? <ChangeLimitModal handleModal={handleModal} /> : ""}
         <S.FirstRow>
           <S.CCLimit>
             <S.CCLimitHeader>
@@ -27,7 +34,12 @@ const TransactionsInfos = () => {
               />
 
               <S.LimitMenu showing={ccMenu}>
-                <div>
+                <div
+                  onClick={() => {
+                    handleModal();
+                    setCCMenu(false);
+                  }}
+                >
                   <FiEdit />
                   <span>Change Limit</span>
                 </div>
