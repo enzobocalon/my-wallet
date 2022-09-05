@@ -1,15 +1,14 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import * as S from "./style";
 
 import { LinearProgress } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
 
 import { MdMoreVert } from "react-icons/md";
-import {FiEdit} from 'react-icons/fi'
+import { FiEdit } from "react-icons/fi";
 import Transactions from "../Transactions/Transactions";
 
 const TransactionsInfos = () => {
-
   const [ccMenu, setCCMenu] = useState<boolean>(false);
 
   return (
@@ -19,11 +18,17 @@ const TransactionsInfos = () => {
           <S.CCLimit>
             <S.CCLimitHeader>
               <h1>Monthly credit card limit</h1>
-              <MdMoreVert size={20} id="more" onClick={() => {setCCMenu(prev => !prev)}}/>
+              <MdMoreVert
+                size={20}
+                id="more"
+                onClick={() => {
+                  setCCMenu((prev) => !prev);
+                }}
+              />
 
-              <S.LimitMenu showing = {ccMenu}>
+              <S.LimitMenu showing={ccMenu}>
                 <div>
-                  <FiEdit/>
+                  <FiEdit />
                   <span>Change Limit</span>
                 </div>
               </S.LimitMenu>

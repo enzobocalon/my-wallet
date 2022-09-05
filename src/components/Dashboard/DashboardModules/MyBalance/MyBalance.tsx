@@ -1,23 +1,23 @@
-import React, {useContext, useEffect} from 'react'
-import * as S from './style'
-import icon from '../../../../assets/icon.svg'
-import { DBContext } from '../../../../context/DBContext'
-import { AuthContext } from '../../../../context/UserContext'
+import React, { useContext, useEffect } from "react";
+import * as S from "./style";
+import icon from "../../../../assets/icon.svg";
+import { DBContext } from "../../../../context/DBContext";
+import { AuthContext } from "../../../../context/UserContext";
 
 const MyBalance = () => {
-  const {getMyBalance, balance} = useContext(DBContext)
-  const {user} = useContext(AuthContext)
+  const { getMyBalance, balance } = useContext(DBContext);
+  const { user } = useContext(AuthContext);
 
-  const valueFormatter = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
+  const valueFormatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
     minimumFractionDigits: 0,
-    maximumFractionDigits: 2
-})
+    maximumFractionDigits: 2,
+  });
 
-useEffect(() => {
-  getMyBalance();
-}, [user])
+  useEffect(() => {
+    getMyBalance();
+  }, [user]);
 
   return (
     <S.Container>
@@ -33,7 +33,7 @@ useEffect(() => {
         <img src={icon} />
       </S.CCFooter>
     </S.Container>
-  )
-}
+  );
+};
 
-export default MyBalance
+export default MyBalance;

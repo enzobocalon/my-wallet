@@ -1,4 +1,4 @@
-import { createContext, useState, useCallback, useEffect } from 'react'
+import { createContext, useState, useCallback, useEffect } from "react";
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
@@ -8,39 +8,45 @@ import {
   User,
   browserSessionPersistence,
   browserLocalPersistence,
-  updateCurrentUser
-} from 'firebase/auth'
- 
-import { collection, addDoc} from 'firebase/firestore'
-import { auth, db } from '../services/firebase'
+  updateCurrentUser,
+} from "firebase/auth";
+
+import { collection, addDoc } from "firebase/firestore";
+import { auth, db } from "../services/firebase";
 
 import { useNavigate, useLocation } from "react-router-dom";
 
 type AuthContextProps = {
-  handleRegister: (name: string, email: string, password: string) => Promise<void>
-  user: User | null
-  registered: boolean
-  loggedIn: boolean | null
-  setLoggedIn: React.Dispatch<React.SetStateAction<boolean | null>>
-  setRegistered: React.Dispatch<React.SetStateAction<boolean>>
-  handleLogin: (email: string, password: string, rememberMe: boolean) => Promise<void>
-  handleLogout: () => void
-}
+  handleRegister: (
+    name: string,
+    email: string,
+    password: string
+  ) => Promise<void>;
+  user: User | null;
+  registered: boolean;
+  loggedIn: boolean | null;
+  setLoggedIn: React.Dispatch<React.SetStateAction<boolean | null>>;
+  setRegistered: React.Dispatch<React.SetStateAction<boolean>>;
+  handleLogin: (
+    email: string,
+    password: string,
+    rememberMe: boolean
+  ) => Promise<void>;
+  handleLogout: () => void;
+};
 
 type AuthProviderProps = {
-  children: React.ReactNode
-}
+  children: React.ReactNode;
+};
 
-
-export const AuthContext = createContext({} as AuthContextProps)
+export const AuthContext = createContext({} as AuthContextProps);
 
 export function AuthProvider({ children }: AuthProviderProps) {
-
-  const [user, setUser] = useState<User | null>(null)
+  const [user, setUser] = useState<User | null>(null);
   const [registered, setRegistered] = useState<boolean>(false);
   const [loggedIn, setLoggedIn] = useState<boolean | null>(null);
 
-  const usersCollections = collection(db, 'users');
+  const usersCollections = collection(db, "users");
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -49,60 +55,67 @@ export function AuthProvider({ children }: AuthProviderProps) {
     async (name: string, email: string, password: string) => {
       try {
         if (name && email && password) {
-          await createUserWithEmailAndPassword(auth, email, password).then((currentUser) => {
-            updateProfile(currentUser.user, {
-              displayName: name
-            })
-            // addDoc(usersCollections, {userId: currentUser.user.uid, creditLimit: 0})
-            setRegistered(true)
-          })
+          await createUserWithEmailAndPassword(auth, email, password).then(
+            (currentUser) => {
+              updateProfile(currentUser.user, {
+                displayName: name,
+              });
+              // addDoc(usersCollections, {userId: currentUser.user.uid, creditLimit: 0})
+              setRegistered(true);
+            }
+          );
         }
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     },
     []
-  )
-  
+  );
+
   const handleLogin = useCallback(
-    async(email: string, password: string, rememberMe: boolean) => {
+    async (email: string, password: string, rememberMe: boolean) => {
       try {
         if (email && password) {
           await signInWithEmailAndPassword(auth, email, password).then(() => {
-            auth.setPersistence(rememberMe ? browserLocalPersistence : browserSessionPersistence)
-            setLoggedIn(true)
-          })
+            auth.setPersistence(
+              rememberMe ? browserLocalPersistence : browserSessionPersistence
+            );
+            setLoggedIn(true);
+          });
         }
       } catch (error) {
-        setLoggedIn(false)
+        setLoggedIn(false);
       }
-    }, [])
-
-    const handleLogout = useCallback(() => {
-      signOut(auth).then(() => {
-        navigate('/')
-        setUser(null);
-      });
     },
-    [navigate])
+    []
+  );
+
+  const handleLogout = useCallback(() => {
+    signOut(auth).then(() => {
+      navigate("/");
+      setUser(null);
+    });
+  }, [navigate]);
 
   useEffect(() => {
     setRegistered(false);
     onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
-        setUser(currentUser)
+        setUser(currentUser);
       }
       // AuthGuard
-      if(!currentUser && location.pathname === '/dashboard'){
-        navigate('/login');
+      if (!currentUser && location.pathname === "/dashboard") {
+        navigate("/login");
       }
 
-      if (currentUser && (location.pathname === '/login' || location.pathname === '/register')){
-        navigate('/dashboard')
+      if (
+        currentUser &&
+        (location.pathname === "/login" || location.pathname === "/register")
+      ) {
+        navigate("/dashboard");
       }
-    })
-
-  }, [location.pathname, navigate])
+    });
+  }, [location.pathname, navigate]);
 
   return (
     <AuthContext.Provider
@@ -114,10 +127,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
         handleLogin,
         handleLogout,
         loggedIn,
-        setLoggedIn
+        setLoggedIn,
       }}
     >
       {children}
     </AuthContext.Provider>
-  )
+  );
 }
