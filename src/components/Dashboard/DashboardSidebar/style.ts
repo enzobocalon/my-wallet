@@ -7,11 +7,12 @@ interface IProps {
 export const Container = styled.div`
     background-color: #1E1D2D;
     min-width: 13vw;
-    max-width: 15vw;
+    max-width: 13vw;
     height: 100vh;
 
     z-index: 0;
     border-right: 1px solid #525399;
+    border-left: 8px solid transparent;
 `
 
 export const MenuContainer = styled.div`
@@ -29,11 +30,14 @@ export const MenuAlign = styled.div`
         display: flex;
         flex-direction: column;
         justify-content: center;
-        align-items: center;
+        align-items: flex-start;
         gap: 1rem;
         margin-top: 2rem;
-        padding-right: 1rem;
-        `
+
+        a{
+            width: 90%;
+        }
+    `
 
 export const DashboardCol = styled.div`
     width: 100%;
@@ -54,7 +58,7 @@ export const MenuRow = styled.div<IProps>`
     position: relative;
     display: flex;
     flex-direction: row !important;
-    justify-content: flex-start;
+    justify-content: flex-start !important;
     align-items: center;
     width: 100%;
     padding-left: 1rem;
@@ -83,8 +87,18 @@ export const MenuRow = styled.div<IProps>`
         width: 5px;
         height: 30px;
         top: 5px;
-        left: 0;
+        left: -8px;
         border-radius: 0 5px 5px 0;
+        animation: slidein .3s;
+    }
+
+    @keyframes slidein {
+        from {
+            transform: translateX(-100%);
+        } 
+        to {
+            transform: translateX(0);
+        }
     }
 
 `

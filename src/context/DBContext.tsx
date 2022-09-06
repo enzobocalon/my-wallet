@@ -83,6 +83,7 @@ export function DBProvider({ children }: DBProviderProps) {
 
   const getMyBalance = useCallback(async () => {
     if (user) {
+      setBalance(null);
       const data = query(userCollections, where("userId", "==", user.uid));
       await getDocs(data).then((docs) => {
         docs.docs.map((doc) => {

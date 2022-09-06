@@ -23,7 +23,13 @@ const MyBalance = () => {
     <S.Container>
       <div>
         <span>Available Balance</span>
-        <h1>{valueFormatter.format(balance?.balance)}</h1>
+        <h1>
+          {!balance?.balance ? (
+            <h1>$0</h1>
+          ) : (
+            valueFormatter.format(balance?.balance)
+          )}
+        </h1>
       </div>
       <S.CCFooter>
         <div>

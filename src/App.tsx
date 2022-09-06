@@ -7,6 +7,7 @@ import Register from './pages/Register/Register';
 import Dashboard from './pages/Dashboard/Dashboard';
 import { AuthProvider } from "./context/UserContext"
 import { DBProvider } from './context/DBContext';
+import TransactionsPage from './pages/TransactionsPage/TransactionsPage';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path ='/register' element={<Register />} />
         <Route path = '/dashboard' element = {<Dashboard />} />
+        <Route path = '/transactions' element = {<TransactionsPage />} />
       </Routes>
       <GlobalStyle />
     </DBProvider>

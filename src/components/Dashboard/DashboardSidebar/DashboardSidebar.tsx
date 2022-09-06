@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { Link, useLocation } from "react-router-dom";
 import * as S from "./style";
 
 import logo from "../../../assets/logo.svg";
@@ -10,6 +11,7 @@ import { AuthContext } from "../../../context/UserContext";
 
 const DashboardSidebar = () => {
   const { handleLogout } = useContext(AuthContext);
+  const location = useLocation();
 
   return (
     <S.Container>
@@ -19,18 +21,45 @@ const DashboardSidebar = () => {
             <img src={logo} />
           </S.LogoRow>
           <S.MenuAlign>
-            <S.MenuRow active={true}>
-              <MdDashboard size={20} />
-              <span>Dashboard</span>
-            </S.MenuRow>
-            <S.MenuRow>
-              <BiTransferAlt size={20} />
-              <span>Transactions</span>
-            </S.MenuRow>
-            <S.MenuRow>
-              <AiOutlineUser size={20} />
-              <span>Profile</span>
-            </S.MenuRow>
+            <Link to={"/dashboard"}>
+              {location.pathname === "/dashboard" ? (
+                <S.MenuRow active={true}>
+                  <MdDashboard size={20} />
+                  <span>Dashboard</span>
+                </S.MenuRow>
+              ) : (
+                <S.MenuRow>
+                  <MdDashboard size={20} />
+                  <span>Dashboard</span>
+                </S.MenuRow>
+              )}
+            </Link>
+            <Link to={"/transactions"}>
+              {location.pathname === "/transactions" ? (
+                <S.MenuRow active={true}>
+                  <BiTransferAlt size={20} />
+                  <span>Transactions</span>
+                </S.MenuRow>
+              ) : (
+                <S.MenuRow>
+                  <BiTransferAlt size={20} />
+                  <span>Transactions</span>
+                </S.MenuRow>
+              )}
+            </Link>
+            <Link to={"/profile"}>
+              {location.pathname === "/profile" ? (
+                <S.MenuRow active={true}>
+                  <AiOutlineUser size={20} />
+                  <span>Profile</span>
+                </S.MenuRow>
+              ) : (
+                <S.MenuRow>
+                  <AiOutlineUser size={20} />
+                  <span>Profile</span>
+                </S.MenuRow>
+              )}
+            </Link>
           </S.MenuAlign>
         </S.DashboardCol>
         <S.Logout onClick={handleLogout}>
