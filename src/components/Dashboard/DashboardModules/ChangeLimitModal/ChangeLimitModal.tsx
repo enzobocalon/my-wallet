@@ -23,6 +23,7 @@ const ChangeLimitModal = ({ handleModal }: Props) => {
     if (limit.current?.value) {
       setError(null);
       updateLimit(limit.current.value)
+      handleModal()
     } else {
       setError("Please insert a valid value.")
     }

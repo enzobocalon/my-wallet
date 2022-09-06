@@ -1,4 +1,4 @@
-import { createContext, useCallback, useState, useContext } from "react";
+import { createContext, useCallback, useState, useContext, useRef } from "react";
 import { db } from "../services/firebase";
 import {
   collection,
@@ -9,7 +9,8 @@ import {
   orderBy,
   DocumentData,
   updateDoc,
-  doc
+  doc,
+  getDoc,
 } from "firebase/firestore";
 import { AuthContext } from "./UserContext";
 
@@ -25,7 +26,7 @@ type DBContextProps = {
   values: Values;
   getMyBalance: () => void;
   balance: DocumentData | null;
-  updateLimit: (limit: string) => Promise<void>
+  updateLimit: (limit: string) => Promise<void>;
 };
 
 type DBProviderProps = {
@@ -48,6 +49,7 @@ export function DBProvider({ children }: DBProviderProps) {
     expenses: 0,
   });
   const [balance, setBalance] = useState<DocumentData | null>(null);
+  const checkLimit = useRef("")
 
   const getTransactions = useCallback(async () => {
     if (user) {
@@ -91,10 +93,22 @@ export function DBProvider({ children }: DBProviderProps) {
   }, [user]);
 
   const updateLimit = useCallback(async (limit: string) => {
-    if (user) {
+    if (user){
+      const data = query(userCollections, where("userId", "==", user.uid));
+      await getDocs(data).then((docs) => {
+       docs.docs.map((doc) => {
+        checkLimit.current = doc.id;
+       })
+      })
 
+      if (checkLimit.current) {
+        const limitRef = doc(db, "users", checkLimit.current)
+        await updateDoc(limitRef, {
+          creditLimit: parseFloat(limit)
+        })
+      }
     }
-  }, [user])
+  }, [user]);
 
   return (
     <DBContext.Provider
@@ -105,7 +119,7 @@ export function DBProvider({ children }: DBProviderProps) {
         values,
         getMyBalance,
         balance,
-        updateLimit
+        updateLimit,
       }}
     >
       {children}
