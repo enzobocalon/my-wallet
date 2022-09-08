@@ -15,7 +15,7 @@ const Transactions = () => {
   return (
     <S.TransactionContainer>
       {userTransactions
-        ? userTransactions.map((doc: DocumentData) => {
+        ? userTransactions.slice(0, 4).map((doc: DocumentData) => {
             return <Transaction docs={doc} key={doc.id} />;
           })
         : ""}

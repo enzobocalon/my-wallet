@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
 import * as S from "./style";
+import { useLocation } from "react-router-dom";
 
 import placeholder from "../../../../assets/placeholderprofile.jpg";
 
@@ -13,11 +14,18 @@ const DashboardHeader = () => {
   const [profileModal, setProfileModal] = useState<boolean>(false);
 
   const { handleLogout, user } = useContext(AuthContext);
+  const location = useLocation();
 
   return (
     <S.Container>
       <div>
-        <h1>Dashboard</h1>
+        <h1>
+          {location.pathname === "/dashboard"
+            ? "Dashboard"
+            : location.pathname === "/transactions"
+            ? "Transactions"
+            : "Profile"}
+        </h1>
       </div>
 
       <S.MenuItems>

@@ -42,7 +42,10 @@ const Transaction = ({ docs }: IProps) => {
 
           <S.TransactionInfos>
             <span>
-              {docs.data().type[0].toUpperCase() + docs.data().type.slice(1)}
+              {docs.data().name[0].toUpperCase() + docs.data().name.slice(1)}
+            </span>
+            <span style={{fontSize:".9rem", fontWeight: "200"}}>
+            {docs.data().type[0].toUpperCase() + docs.data().type.slice(1)}
             </span>
             <span style={{ fontSize: ".8rem", fontWeight: "200" }}>
               {docs.data().transactionData.date}
