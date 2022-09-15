@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import * as S from "./style";
 
 import { MdOutlineFastfood } from "react-icons/md";
@@ -8,6 +8,7 @@ import { RiLuggageDepositLine } from "react-icons/ri";
 import { AiFillDelete } from "react-icons/ai"
 
 import { DocumentData } from "firebase/firestore";
+import DeleteModule from "../DeleteModule/DeleteModule";
 
 interface IProps {
   docs: DocumentData;
@@ -21,9 +22,18 @@ const valueFormatter = new Intl.NumberFormat("en-US", {
 });
 
 const Transaction = ({ docs }: IProps) => {
+
+  const handleModal = () => {
+    setOpenModal(prev => !prev)
+  }
+
+  const [openModal, setOpenModal] = useState<boolean>(false);
   return (
     <>
       <S.Transaction>
+        {
+          openModal ? (<DeleteModule handleModal={handleModal} transactionID = {docs.id}/>) : ''
+        }
         <S.TransactionLeft>
           <S.TransactionIcon
             type={docs.data().type === "incoming" ? "incoming" : "expense"}
@@ -34,7 +44,7 @@ const Transaction = ({ docs }: IProps) => {
               <FaMoneyBillAlt size={28} />
             ) : docs.data().type === "travel" ? (
               <FaPlane size={28} />
-            ) : docs.data().type === "food" ? (
+            ) : docs.data().type === "Food" ? (
               <MdOutlineFastfood size={28} />
             ) : (
               <IoLogoGameControllerB size={28} />
@@ -59,7 +69,7 @@ const Transaction = ({ docs }: IProps) => {
               ? "+ " + valueFormatter.format(docs.data().transactionData.value)
               : "- " + valueFormatter.format(docs.data().transactionData.value)}
           </span>
-          <AiFillDelete id="delete"/>
+          <AiFillDelete id="delete" onClick = {() => handleModal()}/>
         </S.TransactionRight>
       </S.Transaction>
     </>

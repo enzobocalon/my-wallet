@@ -8,7 +8,6 @@ import {
   User,
   browserSessionPersistence,
   browserLocalPersistence,
-  updateCurrentUser,
 } from "firebase/auth";
 
 import { collection, addDoc } from "firebase/firestore";
@@ -60,7 +59,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
               updateProfile(currentUser.user, {
                 displayName: name,
               });
-              // addDoc(usersCollections, {userId: currentUser.user.uid, creditLimit: 0})
+              // addDoc(usersCollections, {userId: currentUser.user.uid, creditLimit: 0, balance: 0})
               setRegistered(true);
             }
           );

@@ -17,6 +17,7 @@ import {
   updateDoc,
   doc,
   getDoc,
+  deleteDoc,
 } from "firebase/firestore";
 import { AuthContext } from "./UserContext";
 
@@ -41,6 +42,8 @@ type DBContextProps = {
     balance: boolean,
     date: Date
   ) => void;
+  deleteTransaction: (id: string) => void
+  
 };
 
 type DBProviderProps = {
@@ -63,7 +66,7 @@ export function DBProvider({ children }: DBProviderProps) {
     expenses: 0,
   });
   const [balance, setBalance] = useState<DocumentData | null>(null);
-  const checkLimit = useRef("");
+  const checkLimit = useRef({id: '', balance: 0});
 
   const getTransactions = useCallback(async () => {
     if (user) {
@@ -113,12 +116,12 @@ export function DBProvider({ children }: DBProviderProps) {
         const data = query(userCollections, where("userId", "==", user.uid));
         await getDocs(data).then((docs) => {
           docs.docs.map((doc) => {
-            checkLimit.current = doc.id;
+            checkLimit.current.id = doc.id;
           });
         });
 
         if (checkLimit.current) {
-          const limitRef = doc(db, "users", checkLimit.current);
+          const limitRef = doc(db, "users", checkLimit.current.id);
           await updateDoc(limitRef, {
             creditLimit: parseFloat(limit),
           });
@@ -140,7 +143,7 @@ export function DBProvider({ children }: DBProviderProps) {
   };
 
   const addTransaction = useCallback(
-    (
+   async (
       name: string,
       type: string,
       value: number,
@@ -148,7 +151,6 @@ export function DBProvider({ children }: DBProviderProps) {
       balance: boolean,
       date: Date
     ) => {
-      console.log(date);
       if (user) {
         const newDate = formatDate(date).toString();
         const transactionsCollection = collection(db, "transactions");
@@ -163,11 +165,59 @@ export function DBProvider({ children }: DBProviderProps) {
           },
           userId: user.uid,
         });
+
+        if (type === 'incoming' || balance) {
+          const data = query(userCollections, where("userId", "==", user.uid));
+          await getDocs(data).then((docs) => {
+            docs.docs.map((doc) => {
+              checkLimit.current.id = doc.id;
+              checkLimit.current.balance = doc.data().balance
+            });
+          });
+          const balanceRef = doc(db, "users", checkLimit.current.id)
+          if (balance && type !== 'incoming'){
+            await updateDoc(balanceRef, {
+              balance: checkLimit.current.balance - value
+            }) 
+          } else {
+            await updateDoc(balanceRef, {
+              balance: checkLimit.current.balance + value
+            }) 
+          }
+        }
         getTransactions();
       }
     },
     [user]
   );
+
+  const deleteTransaction = useCallback(async (id: string) => {
+    if (user) {
+      const data = query(userCollections, where("userId", "==", user.uid));
+      await getDocs(data).then((docs) => {
+        docs.docs.map((doc) => {
+          checkLimit.current.id = doc.id;
+          checkLimit.current.balance = doc.data().balance
+        });
+      });
+      const balanceRef = doc(db, "users", checkLimit.current.id)
+      await getDoc(doc(db, "transactions", id)).then((transactionData) => {
+        if (transactionData.data()!.type === 'incoming') {
+          updateDoc(balanceRef, {
+            balance: checkLimit.current.balance - transactionData.data()!.transactionData.value
+          })
+        } else if (transactionData.data()!.countsBalance){
+            updateDoc(balanceRef, {
+              balance: checkLimit.current.balance + transactionData.data()!.transactionData.value
+            })
+        } else {
+          return;
+        }
+        getMyBalance();
+      })
+    }
+    await deleteDoc(doc(db, "transactions", id)).then(() => getTransactions());
+  }, [user])
 
   return (
     <DBContext.Provider
@@ -180,6 +230,7 @@ export function DBProvider({ children }: DBProviderProps) {
         balance,
         updateLimit,
         addTransaction,
+        deleteTransaction
       }}
     >
       {children}
