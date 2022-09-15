@@ -11,6 +11,14 @@ export const Transaction = styled.div`
     margin-top: .5rem;
     border-bottom: 1px solid #343947;
     padding-bottom: .5rem;
+    transition: all .3s ease;
+
+    &:hover #delete{
+        opacity: 1;
+        pointer-events: all;
+        cursor: pointer;
+        transition: all .3s ease;
+    }
 `
 
 export const TransactionLeft = styled.div`
@@ -35,5 +43,12 @@ export const TransactionInfos = styled.div`
 `
 
 export const TransactionRight = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 
+    svg{
+        opacity: 0;
+        pointer-events: none;
+    }
 `

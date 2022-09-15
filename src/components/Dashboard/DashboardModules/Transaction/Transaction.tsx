@@ -5,6 +5,7 @@ import { MdOutlineFastfood } from "react-icons/md";
 import { FaPlane, FaMoneyBillAlt } from "react-icons/fa";
 import { IoLogoGameControllerB } from "react-icons/io";
 import { RiLuggageDepositLine } from "react-icons/ri";
+import { AiFillDelete } from "react-icons/ai"
 
 import { DocumentData } from "firebase/firestore";
 
@@ -15,7 +16,7 @@ interface IProps {
 const valueFormatter = new Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "USD",
-  minimumFractionDigits: 0,
+  minimumFractionDigits: 2,
   maximumFractionDigits: 2,
 });
 
@@ -58,6 +59,7 @@ const Transaction = ({ docs }: IProps) => {
               ? "+ " + valueFormatter.format(docs.data().transactionData.value)
               : "- " + valueFormatter.format(docs.data().transactionData.value)}
           </span>
+          <AiFillDelete id="delete"/>
         </S.TransactionRight>
       </S.Transaction>
     </>

@@ -1,4 +1,10 @@
-import { createContext, useCallback, useState, useContext, useRef } from "react";
+import {
+  createContext,
+  useCallback,
+  useState,
+  useContext,
+  useRef,
+} from "react";
 import { db } from "../services/firebase";
 import {
   collection,
@@ -27,6 +33,14 @@ type DBContextProps = {
   getMyBalance: () => void;
   balance: DocumentData | null;
   updateLimit: (limit: string) => Promise<void>;
+  addTransaction: (
+    name: string,
+    type: string,
+    value: number,
+    limit: boolean,
+    balance: boolean,
+    date: Date
+  ) => void;
 };
 
 type DBProviderProps = {
@@ -49,7 +63,7 @@ export function DBProvider({ children }: DBProviderProps) {
     expenses: 0,
   });
   const [balance, setBalance] = useState<DocumentData | null>(null);
-  const checkLimit = useRef("")
+  const checkLimit = useRef("");
 
   const getTransactions = useCallback(async () => {
     if (user) {
@@ -93,23 +107,67 @@ export function DBProvider({ children }: DBProviderProps) {
     }
   }, [user]);
 
-  const updateLimit = useCallback(async (limit: string) => {
-    if (user){
-      const data = query(userCollections, where("userId", "==", user.uid));
-      await getDocs(data).then((docs) => {
-       docs.docs.map((doc) => {
-        checkLimit.current = doc.id;
-       })
-      })
+  const updateLimit = useCallback(
+    async (limit: string) => {
+      if (user) {
+        const data = query(userCollections, where("userId", "==", user.uid));
+        await getDocs(data).then((docs) => {
+          docs.docs.map((doc) => {
+            checkLimit.current = doc.id;
+          });
+        });
 
-      if (checkLimit.current) {
-        const limitRef = doc(db, "users", checkLimit.current)
-        await updateDoc(limitRef, {
-          creditLimit: parseFloat(limit)
-        })
+        if (checkLimit.current) {
+          const limitRef = doc(db, "users", checkLimit.current);
+          await updateDoc(limitRef, {
+            creditLimit: parseFloat(limit),
+          });
+        }
       }
-    }
-  }, [user]);
+    },
+    [user]
+  );
+
+  const formatDate = (date: Date) => {
+    let month = "" + (date.getMonth() + 1),
+      day = "" + date.getDate(),
+      year = date.getFullYear();
+
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
+
+    return [year, month, day].join("-");
+  };
+
+  const addTransaction = useCallback(
+    (
+      name: string,
+      type: string,
+      value: number,
+      limit: boolean,
+      balance: boolean,
+      date: Date
+    ) => {
+      console.log(date);
+      if (user) {
+        const newDate = formatDate(date).toString();
+        const transactionsCollection = collection(db, "transactions");
+        addDoc(transactionsCollection, {
+          name: name,
+          countsLimit: limit,
+          countsBalance: balance,
+          type: type,
+          transactionData: {
+            date: newDate,
+            value: value,
+          },
+          userId: user.uid,
+        });
+        getTransactions();
+      }
+    },
+    [user]
+  );
 
   return (
     <DBContext.Provider
@@ -121,6 +179,7 @@ export function DBProvider({ children }: DBProviderProps) {
         getMyBalance,
         balance,
         updateLimit,
+        addTransaction,
       }}
     >
       {children}
