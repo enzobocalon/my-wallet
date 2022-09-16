@@ -44,7 +44,7 @@ const Transaction = ({ docs }: IProps) => {
               <FaMoneyBillAlt size={28} />
             ) : docs.data().type === "travel" ? (
               <FaPlane size={28} />
-            ) : docs.data().type === "Food" ? (
+            ) : docs.data().type === "food" ? (
               <MdOutlineFastfood size={28} />
             ) : (
               <IoLogoGameControllerB size={28} />

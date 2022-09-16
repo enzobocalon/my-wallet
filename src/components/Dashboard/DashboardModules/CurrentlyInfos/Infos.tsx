@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import * as S from "./style";
 import { DBContext } from "../../../../context/DBContext";
-import { DocumentData } from "firebase/firestore";
 
 const Infos = () => {
   const { userTransactions, getValues, values } = useContext(DBContext);

@@ -97,7 +97,7 @@ const AddTransaction = ({ handleModal }: IProps) => {
                 name="type"
                 onClick={() => {
                   setRenderQuestion(true);
-                  setType("Food");
+                  setType("food");
                 }}
               />{" "}
               <span>Food</span>

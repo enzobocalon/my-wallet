@@ -43,7 +43,9 @@ type DBContextProps = {
     date: Date
   ) => void;
   deleteTransaction: (id: string) => void
-  
+  getLimit: () => void
+  limitDisplay: number,
+  usage: number
 };
 
 type DBProviderProps = {
@@ -58,6 +60,8 @@ export function DBProvider({ children }: DBProviderProps) {
   const transactions = collection(db, "transactions");
   const userCollections = collection(db, "users");
 
+  const [limitDisplay, setLimitDisplay] = useState(0);
+
   const [userTransactions, setUserTransactions] = useState<DocumentData | null>(
     null
   );
@@ -67,6 +71,8 @@ export function DBProvider({ children }: DBProviderProps) {
   });
   const [balance, setBalance] = useState<DocumentData | null>(null);
   const checkLimit = useRef({id: '', balance: 0});
+
+  const [usage, setUsage] = useState(0)
 
   const getTransactions = useCallback(async () => {
     if (user) {
@@ -130,6 +136,30 @@ export function DBProvider({ children }: DBProviderProps) {
     },
     [user]
   );
+
+  const getLimit = useCallback(async () => {
+    let sum = 0
+    let limitX = 0
+    setUsage(0);
+    if (user) {
+      const data = query(userCollections, where("userId", "==", user.uid));
+      await getDocs(data).then((docs) => {
+        docs.docs.map((doc) => {
+          setLimitDisplay(doc.data().creditLimit)
+          limitX = doc.data().creditLimit
+        });
+        if (userTransactions) {
+          userTransactions.map((transaction: DocumentData) => {
+            console.log(transaction.data())
+            if (transaction.data().countsLimit){
+              sum += transaction.data().transactionData.value
+              setUsage((sum/limitX) * 100)
+            }
+          })
+        }
+      });
+    }
+  }, [userTransactions])
 
   const formatDate = (date: Date) => {
     let month = "" + (date.getMonth() + 1),
@@ -214,10 +244,12 @@ export function DBProvider({ children }: DBProviderProps) {
           return;
         }
         getMyBalance();
+        getTransactions();
       })
     }
     await deleteDoc(doc(db, "transactions", id)).then(() => getTransactions());
   }, [user])
+
 
   return (
     <DBContext.Provider
@@ -230,7 +262,10 @@ export function DBProvider({ children }: DBProviderProps) {
         balance,
         updateLimit,
         addTransaction,
-        deleteTransaction
+        deleteTransaction,
+        getLimit,
+        limitDisplay,
+        usage
       }}
     >
       {children}

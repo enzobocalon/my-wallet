@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import * as S from "./style";
 
 import { LinearProgress } from "@mui/material";
@@ -8,15 +8,22 @@ import { MdMoreVert } from "react-icons/md";
 import { FiEdit } from "react-icons/fi";
 import Transactions from "../Transactions/Transactions";
 import ChangeLimitModal from "../ChangeLimitModal/ChangeLimitModal";
+import { DBContext } from "../../../../context/DBContext";
+
 
 const TransactionsInfos = () => {
   const [ccMenu, setCCMenu] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
+  const {userTransactions, getLimit, usage} = useContext(DBContext)
+
 
   const handleModal = () => {
     setShowModal((prev) => !prev);
   };
 
+  useEffect(() => {
+    getLimit()
+  }, [userTransactions])
   return (
     <>
       <S.Container>
@@ -32,7 +39,6 @@ const TransactionsInfos = () => {
                   setCCMenu((prev) => !prev);
                 }}
               />
-
               <S.LimitMenu showing={ccMenu}>
                 <div
                   onClick={() => {
@@ -45,10 +51,12 @@ const TransactionsInfos = () => {
                 </div>
               </S.LimitMenu>
             </S.CCLimitHeader>
-            <Tooltip title={"10%"} placement="bottom">
+            <Tooltip title={
+              `${usage}%`
+            } placement="bottom">
               <LinearProgress
                 variant="determinate"
-                value={10}
+                value={usage}
                 color={"inherit"}
                 sx={{
                   background: "#7A4CB3",
