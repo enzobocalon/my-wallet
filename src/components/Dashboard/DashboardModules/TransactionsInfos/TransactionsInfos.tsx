@@ -10,20 +10,18 @@ import Transactions from "../Transactions/Transactions";
 import ChangeLimitModal from "../ChangeLimitModal/ChangeLimitModal";
 import { DBContext } from "../../../../context/DBContext";
 
-
 const TransactionsInfos = () => {
   const [ccMenu, setCCMenu] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
-  const {userTransactions, getLimit, usage} = useContext(DBContext)
-
+  const { userTransactions, getLimit, usage } = useContext(DBContext);
 
   const handleModal = () => {
     setShowModal((prev) => !prev);
   };
 
   useEffect(() => {
-    getLimit()
-  }, [userTransactions])
+    getLimit();
+  }, [userTransactions]);
   return (
     <>
       <S.Container>
@@ -51,12 +49,10 @@ const TransactionsInfos = () => {
                 </div>
               </S.LimitMenu>
             </S.CCLimitHeader>
-            <Tooltip title={
-              `${usage}%`
-            } placement="bottom">
+            <Tooltip title={usage <= 100 ? `${usage}%` : 'Limit exceeded.'} placement="bottom">
               <LinearProgress
                 variant="determinate"
-                value={usage}
+                value={usage <= 100 ? usage : 100}
                 color={"inherit"}
                 sx={{
                   background: "#7A4CB3",
