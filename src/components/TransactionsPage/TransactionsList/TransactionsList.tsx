@@ -6,7 +6,7 @@ import { DocumentData } from "firebase/firestore";
 import * as S from './style'
 
 const TransactionsList = () => {
-    const {getTransactions, userTransactions} = useContext(DBContext)
+    const {getTransactions, userTransactions, filteredTransactions} = useContext(DBContext)
 
     useEffect(() => {
         getTransactions();
@@ -14,8 +14,8 @@ const TransactionsList = () => {
     
   return (
     <S.Container>
-        {userTransactions
-        ? userTransactions.map((doc: DocumentData) => {
+        {filteredTransactions
+        ? filteredTransactions.map((doc: DocumentData) => {
             return <Transaction docs={doc} key={doc.id} />;
           })
         : ""}

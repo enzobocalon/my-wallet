@@ -11,7 +11,7 @@ export const LeftContainer = styled.div`
     display: flex;
     align-items: center;
     gap: 1rem;
-    width: 30%;
+    width: 50%;
 `
 export const RightContainer = styled.div`
     margin-right: 2rem;

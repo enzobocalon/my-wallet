@@ -29,6 +29,7 @@ interface Values {
 type DBContextProps = {
   getTransactions: () => void;
   userTransactions: DocumentData | null;
+  filteredTransactions: DocumentData | null;
   getValues: () => void;
   values: Values;
   getMyBalance: () => void;
@@ -42,10 +43,11 @@ type DBContextProps = {
     balance: boolean,
     date: Date
   ) => void;
-  deleteTransaction: (id: string) => void
-  getLimit: () => void
-  limitDisplay: number,
-  usage: number
+  deleteTransaction: (id: string) => void;
+  getLimit: () => void;
+  limitDisplay: number;
+  usage: number;
+  filterTransactions: (option: string) => void;
 };
 
 type DBProviderProps = {
@@ -65,14 +67,16 @@ export function DBProvider({ children }: DBProviderProps) {
   const [userTransactions, setUserTransactions] = useState<DocumentData | null>(
     null
   );
+  const [filteredTransactions, setFilteredTransactions] =
+    useState<DocumentData | null>(null);
   const [values, setValues] = useState<Values>({
     incoming: 0,
     expenses: 0,
   });
   const [balance, setBalance] = useState<DocumentData | null>(null);
-  const checkLimit = useRef({id: '', balance: 0});
+  const checkLimit = useRef({ id: "", balance: 0 });
 
-  const [usage, setUsage] = useState(0)
+  const [usage, setUsage] = useState(0);
 
   const getTransactions = useCallback(async () => {
     if (user) {
@@ -83,6 +87,7 @@ export function DBProvider({ children }: DBProviderProps) {
       );
       await getDocs(data).then((docs) => {
         setUserTransactions(docs.docs);
+        setFilteredTransactions(docs.docs);
       });
     }
   }, [user]);
@@ -138,28 +143,28 @@ export function DBProvider({ children }: DBProviderProps) {
   );
 
   const getLimit = useCallback(async () => {
-    let sum = 0
-    let limitX = 0
+    let sum = 0;
+    let limitX = 0;
     setUsage(0);
     if (user) {
       const data = query(userCollections, where("userId", "==", user.uid));
       await getDocs(data).then((docs) => {
         docs.docs.map((doc) => {
-          setLimitDisplay(doc.data().creditLimit)
-          limitX = doc.data().creditLimit
+          setLimitDisplay(doc.data().creditLimit);
+          limitX = doc.data().creditLimit;
         });
         if (userTransactions) {
           userTransactions.map((transaction: DocumentData) => {
-            console.log(transaction.data())
-            if (transaction.data().countsLimit){
-              sum += transaction.data().transactionData.value
-              setUsage((sum/limitX) * 100)
+            console.log(transaction.data());
+            if (transaction.data().countsLimit) {
+              sum += transaction.data().transactionData.value;
+              setUsage((sum / limitX) * 100);
             }
-          })
+          });
         }
       });
     }
-  }, [userTransactions])
+  }, [userTransactions]);
 
   const formatDate = (date: Date) => {
     let month = "" + (date.getMonth() + 1),
@@ -173,7 +178,7 @@ export function DBProvider({ children }: DBProviderProps) {
   };
 
   const addTransaction = useCallback(
-   async (
+    async (
       name: string,
       type: string,
       value: number,
@@ -196,23 +201,23 @@ export function DBProvider({ children }: DBProviderProps) {
           userId: user.uid,
         });
 
-        if (type === 'incoming' || balance) {
+        if (type === "incoming" || balance) {
           const data = query(userCollections, where("userId", "==", user.uid));
           await getDocs(data).then((docs) => {
             docs.docs.map((doc) => {
               checkLimit.current.id = doc.id;
-              checkLimit.current.balance = doc.data().balance
+              checkLimit.current.balance = doc.data().balance;
             });
           });
-          const balanceRef = doc(db, "users", checkLimit.current.id)
-          if (balance && type !== 'incoming'){
+          const balanceRef = doc(db, "users", checkLimit.current.id);
+          if (balance && type !== "incoming") {
             await updateDoc(balanceRef, {
-              balance: checkLimit.current.balance - value
-            }) 
+              balance: checkLimit.current.balance - value,
+            });
           } else {
             await updateDoc(balanceRef, {
-              balance: checkLimit.current.balance + value
-            }) 
+              balance: checkLimit.current.balance + value,
+            });
           }
         }
         getTransactions();
@@ -221,35 +226,58 @@ export function DBProvider({ children }: DBProviderProps) {
     [user]
   );
 
-  const deleteTransaction = useCallback(async (id: string) => {
-    if (user) {
-      const data = query(userCollections, where("userId", "==", user.uid));
-      await getDocs(data).then((docs) => {
-        docs.docs.map((doc) => {
-          checkLimit.current.id = doc.id;
-          checkLimit.current.balance = doc.data().balance
+  const deleteTransaction = useCallback(
+    async (id: string) => {
+      if (user) {
+        const data = query(userCollections, where("userId", "==", user.uid));
+        await getDocs(data).then((docs) => {
+          docs.docs.map((doc) => {
+            checkLimit.current.id = doc.id;
+            checkLimit.current.balance = doc.data().balance;
+          });
         });
-      });
-      const balanceRef = doc(db, "users", checkLimit.current.id)
-      await getDoc(doc(db, "transactions", id)).then((transactionData) => {
-        if (transactionData.data()!.type === 'incoming') {
-          updateDoc(balanceRef, {
-            balance: checkLimit.current.balance - transactionData.data()!.transactionData.value
-          })
-        } else if (transactionData.data()!.countsBalance){
+        const balanceRef = doc(db, "users", checkLimit.current.id);
+        await getDoc(doc(db, "transactions", id)).then((transactionData) => {
+          if (transactionData.data()!.type === "incoming") {
             updateDoc(balanceRef, {
-              balance: checkLimit.current.balance + transactionData.data()!.transactionData.value
-            })
-        } else {
-          return;
-        }
-        getMyBalance();
-        getTransactions();
-      })
-    }
-    await deleteDoc(doc(db, "transactions", id)).then(() => getTransactions());
-  }, [user])
+              balance:
+                checkLimit.current.balance -
+                transactionData.data()!.transactionData.value,
+            });
+          } else if (transactionData.data()!.countsBalance) {
+            updateDoc(balanceRef, {
+              balance:
+                checkLimit.current.balance +
+                transactionData.data()!.transactionData.value,
+            });
+          } else {
+            return;
+          }
+          getMyBalance();
+          getTransactions();
+        });
+      }
+      await deleteDoc(doc(db, "transactions", id)).then(() =>
+        getTransactions()
+      );
+    },
+    [user]
+  );
 
+  const filterTransactions = useCallback(
+    (option: string) => {
+      if (userTransactions) {
+        option === "all"
+          ? setFilteredTransactions(userTransactions)
+          : setFilteredTransactions(
+              userTransactions.filter((transaction: DocumentData) =>
+                transaction.data().type.includes(option)
+              )
+            );
+      }
+    },
+    [userTransactions]
+  );
 
   return (
     <DBContext.Provider
@@ -265,7 +293,9 @@ export function DBProvider({ children }: DBProviderProps) {
         deleteTransaction,
         getLimit,
         limitDisplay,
-        usage
+        usage,
+        filterTransactions,
+        filteredTransactions,
       }}
     >
       {children}
