@@ -7,11 +7,11 @@ import { DBContext } from "../../../context/DBContext";
 const TransactionsHeader = () => {
   const [option, setOption] = useState("all");
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const {filterTransactions} = useContext(DBContext);
+  const { filterTransactions } = useContext(DBContext);
 
   const handleChange = (e: SelectChangeEvent) => {
     setOption(e.target.value as string);
-    filterTransactions(e.target.value as string)
+    filterTransactions(e.target.value as string);
   };
 
   const handleModal = () => {

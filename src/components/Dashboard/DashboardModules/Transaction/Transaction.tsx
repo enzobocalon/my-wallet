@@ -1,11 +1,11 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import * as S from "./style";
 
 import { MdOutlineFastfood } from "react-icons/md";
 import { FaPlane, FaMoneyBillAlt } from "react-icons/fa";
 import { IoLogoGameControllerB } from "react-icons/io";
 import { RiLuggageDepositLine } from "react-icons/ri";
-import { AiFillDelete } from "react-icons/ai"
+import { AiFillDelete } from "react-icons/ai";
 
 import { DocumentData } from "firebase/firestore";
 import DeleteModule from "../DeleteModule/DeleteModule";
@@ -22,18 +22,19 @@ const valueFormatter = new Intl.NumberFormat("en-US", {
 });
 
 const Transaction = ({ docs }: IProps) => {
-
   const handleModal = () => {
-    setOpenModal(prev => !prev)
-  }
+    setOpenModal((prev) => !prev);
+  };
 
   const [openModal, setOpenModal] = useState<boolean>(false);
   return (
     <>
       <S.Transaction>
-        {
-          openModal ? (<DeleteModule handleModal={handleModal} transactionID = {docs.id}/>) : ''
-        }
+        {openModal ? (
+          <DeleteModule handleModal={handleModal} transactionID={docs.id} />
+        ) : (
+          ""
+        )}
         <S.TransactionLeft>
           <S.TransactionIcon
             type={docs.data().type === "incoming" ? "incoming" : "expense"}
@@ -55,8 +56,8 @@ const Transaction = ({ docs }: IProps) => {
             <span>
               {docs.data().name[0].toUpperCase() + docs.data().name.slice(1)}
             </span>
-            <span style={{fontSize:".9rem", fontWeight: "200"}}>
-            {docs.data().type[0].toUpperCase() + docs.data().type.slice(1)}
+            <span style={{ fontSize: ".9rem", fontWeight: "200" }}>
+              {docs.data().type[0].toUpperCase() + docs.data().type.slice(1)}
             </span>
             <span style={{ fontSize: ".8rem", fontWeight: "200" }}>
               {docs.data().transactionData.date}
@@ -69,7 +70,7 @@ const Transaction = ({ docs }: IProps) => {
               ? "+ " + valueFormatter.format(docs.data().transactionData.value)
               : "- " + valueFormatter.format(docs.data().transactionData.value)}
           </span>
-          <AiFillDelete id="delete" onClick = {() => handleModal()}/>
+          <AiFillDelete id="delete" onClick={() => handleModal()} />
         </S.TransactionRight>
       </S.Transaction>
     </>

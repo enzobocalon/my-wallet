@@ -20,7 +20,6 @@ const AddTransaction = ({ handleModal }: IProps) => {
   const balanceRef = useRef<HTMLInputElement | null>(null);
   const limitRef = useRef<HTMLInputElement | null>(null);
 
-
   const handleSubmit = () => {
     if (titleRef.current?.value && valueRef.current?.value && type) {
       if (type === "incoming") {
@@ -44,7 +43,6 @@ const AddTransaction = ({ handleModal }: IProps) => {
       }
 
       handleModal();
-
     }
   };
 
