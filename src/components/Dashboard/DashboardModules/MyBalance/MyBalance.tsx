@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import * as S from "./style";
 import icon from "../../../../assets/icon.svg";
 import { DBContext } from "../../../../context/DBContext";
-import { AuthContext } from "../../../../context/UserContext";
+import { AuthContext } from "../../../../context/AuthContext";
 
 const MyBalance = () => {
   const { getMyBalance, balance } = useContext(DBContext);

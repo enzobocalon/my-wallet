@@ -8,9 +8,10 @@ import {
   User,
   browserSessionPersistence,
   browserLocalPersistence,
+  updatePassword
 } from "firebase/auth";
 
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, query, where } from "firebase/firestore";
 import { auth, db } from "../services/firebase";
 
 import { useNavigate, useLocation } from "react-router-dom";
@@ -32,6 +33,9 @@ type AuthContextProps = {
     rememberMe: boolean
   ) => Promise<void>;
   handleLogout: () => void;
+  changePassword: (pass: string) => void;
+  passwordChanged: boolean | null
+  setPasswordChanged: React.Dispatch<React.SetStateAction<boolean | null>>
 };
 
 type AuthProviderProps = {
@@ -44,6 +48,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null);
   const [registered, setRegistered] = useState<boolean>(false);
   const [loggedIn, setLoggedIn] = useState<boolean | null>(null);
+  const [passwordChanged, setPasswordChanged] = useState<boolean | null>(null);
 
   const usersCollections = collection(db, "users");
 
@@ -59,7 +64,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
               updateProfile(currentUser.user, {
                 displayName: name,
               });
-              // addDoc(usersCollections, {userId: currentUser.user.uid, creditLimit: 0, balance: 0})
+              // addDoc(usersCollections, {userId: currentUser.user.uid, creditLimit: 0, balance: 0, city: 'unknown', country: 'unknown'})
               setRegistered(true);
             }
           );
@@ -96,6 +101,20 @@ export function AuthProvider({ children }: AuthProviderProps) {
     });
   }, [navigate]);
 
+  const changePassword = useCallback((pass: string) => {
+    if (user) {
+      updatePassword(user, pass).then(() => {
+        setPasswordChanged(true)
+      });
+    }
+  }, [user])
+
+  const getUserData = useCallback(() => {
+    if (user) {
+      const data = query(usersCollections, where("userId", "==", user.uid));
+    }
+  }, [])
+
   useEffect(() => {
     setRegistered(false);
     onAuthStateChanged(auth, (currentUser) => {
@@ -103,7 +122,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         setUser(currentUser);
       }
       // AuthGuard
-      if (!currentUser && location.pathname === "/dashboard") {
+      if ((!currentUser && location.pathname === "/dashboard") || (!currentUser && location.pathname === "/transactions") || (!currentUser && location.pathname === "/profile")) {
         navigate("/login");
       }
 
@@ -127,6 +146,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
         handleLogout,
         loggedIn,
         setLoggedIn,
+        changePassword,
+        passwordChanged,
+        setPasswordChanged
       }}
     >
       {children}

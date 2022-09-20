@@ -2,7 +2,7 @@ import { FC, useRef, useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import * as S from "./style";
 
-import { AuthContext } from "../../../context/UserContext";
+import { AuthContext } from "../../../context/AuthContext";
 import { fetchSignInMethodsForEmail } from "firebase/auth";
 import { auth } from '../../../services/firebase'
 

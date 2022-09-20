@@ -2,7 +2,7 @@ import React, { FC, useRef, useContext, useState } from 'react'
 import * as S from './style'
 import {MdEmail, MdPassword} from 'react-icons/md'
 import { Link, useNavigate } from 'react-router-dom';
-import { AuthContext } from "../../../context/UserContext"
+import { AuthContext } from "../../../context/AuthContext"
 
 import { Snackbar } from "@mui/material";
 

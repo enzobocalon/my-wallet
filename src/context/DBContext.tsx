@@ -19,7 +19,7 @@ import {
   getDoc,
   deleteDoc,
 } from "firebase/firestore";
-import { AuthContext } from "./UserContext";
+import { AuthContext } from "./AuthContext";
 
 interface Values {
   incoming: number;
@@ -155,7 +155,6 @@ export function DBProvider({ children }: DBProviderProps) {
         });
         if (userTransactions) {
           userTransactions.map((transaction: DocumentData) => {
-            console.log(transaction.data());
             if (transaction.data().countsLimit) {
               sum += transaction.data().transactionData.value;
               setUsage((sum / limitX) * 100);

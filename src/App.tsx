@@ -5,7 +5,7 @@ import Homepage from './pages/Homepage/Homepage';
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
 import Dashboard from './pages/Dashboard/Dashboard';
-import { AuthProvider } from "./context/UserContext"
+import { AuthProvider } from "./context/AuthContext"
 import { DBProvider } from './context/DBContext';
 import TransactionsPage from './pages/TransactionsPage/TransactionsPage';
 import Profile from './pages/Profile/Profile';

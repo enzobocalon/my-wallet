@@ -7,7 +7,7 @@ import logo from "../../../assets/logo.svg";
 import { MdDashboard } from "react-icons/md";
 import { BiTransferAlt, BiLogOut } from "react-icons/bi";
 import { AiOutlineUser } from "react-icons/ai";
-import { AuthContext } from "../../../context/UserContext";
+import { AuthContext } from "../../../context/AuthContext";
 
 const DashboardSidebar = () => {
   const { handleLogout } = useContext(AuthContext);

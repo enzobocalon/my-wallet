@@ -8,7 +8,7 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 import { MdNotifications } from "react-icons/md";
 import { AiOutlineUser } from "react-icons/ai";
 import { BiLogOut } from "react-icons/bi";
-import { AuthContext } from "../../../../context/UserContext";
+import { AuthContext } from "../../../../context/AuthContext";
 
 const DashboardHeader = () => {
   const [profileModal, setProfileModal] = useState<boolean>(false);

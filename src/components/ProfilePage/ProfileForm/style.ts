@@ -37,6 +37,8 @@ export const FormContainer = styled.div`
     align-items: center;
     justify-content: center;
     width: 100%;
+
+
     `
 
 export const FormInfo = styled.div`
@@ -51,6 +53,10 @@ export const FormInfo = styled.div`
     input{
         height: 25px;
         padding: 0 10px;
+    }
+    @media (max-width: 520px){
+            display: flex;
+            flex-direction: column;
     }
 `
 

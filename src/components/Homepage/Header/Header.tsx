@@ -4,7 +4,7 @@ import * as S from './styles'
 import logo from '../../../assets/logo.svg'
 import { BiLogOut } from 'react-icons/bi'
 import placeholderprofile from '../../../assets/placeholderprofile.jpg'
-import { AuthContext } from "../../../context/UserContext"
+import { AuthContext } from "../../../context/AuthContext"
 
 const Header:FC = () => {
     const { user, handleLogout } = useContext(AuthContext)
