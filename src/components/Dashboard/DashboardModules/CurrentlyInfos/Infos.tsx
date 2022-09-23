@@ -1,9 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import * as S from "./style";
 import { DBContext } from "../../../../context/DBContext";
 
 const Infos = () => {
   const { userTransactions, getValues, values } = useContext(DBContext);
+  const navigate = useNavigate();
 
   const valueFormatter = new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -38,7 +40,7 @@ const Infos = () => {
           <span>This month's profit</span>
         </S.CurrentInfo>
       </S.Infos>
-      <span id="transactions">View Transactions</span>
+      <span id="transactions" onClick={() => navigate('/transactions')}>View Transactions</span>
     </S.Container>
   );
 };

@@ -9,11 +9,14 @@ import { FiEdit } from "react-icons/fi";
 import Transactions from "../Transactions/Transactions";
 import ChangeLimitModal from "../ChangeLimitModal/ChangeLimitModal";
 import { DBContext } from "../../../../context/DBContext";
+import { useNavigate } from "react-router-dom";
+
 
 const TransactionsInfos = () => {
   const [ccMenu, setCCMenu] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
   const { userTransactions, getLimit, usage } = useContext(DBContext);
+  const navigate = useNavigate();
 
   const handleModal = () => {
     setShowModal((prev) => !prev);
@@ -73,7 +76,7 @@ const TransactionsInfos = () => {
           <h1>Latest Transactions</h1>
         </S.TransactionsHeader>
         <Transactions />
-        <span id="viewTransactions">View transactions</span>
+        <span id="viewTransactions" onClick={() => navigate('/transactions')}>View transactions</span>
       </S.Container>
     </>
   );

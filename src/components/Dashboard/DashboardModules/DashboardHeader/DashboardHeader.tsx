@@ -1,8 +1,6 @@
 import { useState, useContext } from "react";
 import * as S from "./style";
-import { useLocation } from "react-router-dom";
-
-import placeholder from "../../../../assets/placeholderprofile.jpg";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { MdNotifications } from "react-icons/md";
@@ -15,6 +13,7 @@ const DashboardHeader = () => {
 
   const { handleLogout, user, userDisplay, PFP } = useContext(AuthContext);
   const location = useLocation();
+  const navigate = useNavigate();
 
   return (
     <S.Container>
@@ -47,7 +46,7 @@ const DashboardHeader = () => {
           <S.PMContainer>
             <S.PMItem>
               <AiOutlineUser size={20} />
-              <span>Profile</span>
+              <span onClick={() => navigate('/profile')}>Profile</span>
             </S.PMItem>
 
             <S.PMItem onClick={handleLogout}>
