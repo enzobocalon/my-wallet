@@ -4,6 +4,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { DBContext } from "../../../context/DBContext";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { Snackbar } from "@mui/material";
 
 interface IProps {
   handleModal: () => void;
@@ -19,6 +20,7 @@ const AddTransaction = ({ handleModal }: IProps) => {
   const valueRef = useRef<HTMLInputElement | null>(null);
   const balanceRef = useRef<HTMLInputElement | null>(null);
   const limitRef = useRef<HTMLInputElement | null>(null);
+  const [renderSnackbar, setRenderSnackbar] = useState<boolean>(false);
 
   const handleSubmit = () => {
     if (titleRef.current?.value && valueRef.current?.value && type) {
@@ -31,6 +33,7 @@ const AddTransaction = ({ handleModal }: IProps) => {
           true,
           date
         );
+        setRenderSnackbar(true);
       } else {
         addTransaction(
           titleRef.current.value,
@@ -40,9 +43,8 @@ const AddTransaction = ({ handleModal }: IProps) => {
           balanceRef.current!.checked,
           date
         );
+        setRenderSnackbar(true);
       }
-
-      handleModal();
     }
   };
 
@@ -161,6 +163,16 @@ const AddTransaction = ({ handleModal }: IProps) => {
             Add Transaction
           </S.AddTransactionButton>
         </S.FormContainer>
+
+        <Snackbar
+          open={renderSnackbar}
+          autoHideDuration={1000}
+          onClose={() => {
+            setRenderSnackbar(false);
+            handleModal();
+          }}
+          message="Transaction added."
+        />
       </S.Container>
     </S.BlackOutLayer>
   );
