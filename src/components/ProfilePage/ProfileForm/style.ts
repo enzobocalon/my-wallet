@@ -12,6 +12,7 @@ export const Container = styled.div`
     margin-right: 2rem;
     box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
 
+
     h1{
         font-size: 2rem;
         margin-bottom: 1rem;
@@ -53,6 +54,16 @@ export const FormInfo = styled.div`
     input{
         height: 25px;
         padding: 0 10px;
+    }
+
+    div{
+        display: flex;
+        align-items: center;
+        gap: .5rem;
+
+        svg{
+            cursor: pointer;
+        }
     }
     @media (max-width: 520px){
             display: flex;

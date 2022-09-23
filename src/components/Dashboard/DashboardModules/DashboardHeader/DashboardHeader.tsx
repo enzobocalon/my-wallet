@@ -13,7 +13,7 @@ import { AuthContext } from "../../../../context/AuthContext";
 const DashboardHeader = () => {
   const [profileModal, setProfileModal] = useState<boolean>(false);
 
-  const { handleLogout, user } = useContext(AuthContext);
+  const { handleLogout, user, userDisplay, PFP } = useContext(AuthContext);
   const location = useLocation();
 
   return (
@@ -31,9 +31,9 @@ const DashboardHeader = () => {
       <S.MenuItems>
         <MdNotifications size={20} />
         <S.Profile showing={profileModal}>
-          <img src={placeholder} />
+          <img src={`${PFP}`} />
           <div>
-            <p>{user?.displayName}</p>
+            <p>{userDisplay}</p>
             <span>{user?.email}</span>
           </div>
           <RiArrowDropDownLine

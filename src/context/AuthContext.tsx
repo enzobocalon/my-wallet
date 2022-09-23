@@ -11,8 +11,10 @@ import {
   updatePassword
 } from "firebase/auth";
 
-import { collection, addDoc, query, where } from "firebase/firestore";
+import { collection, addDoc, query, where, DocumentData, getDocs } from "firebase/firestore";
 import { auth, db } from "../services/firebase";
+import { storage } from "../services/firebase";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -35,7 +37,13 @@ type AuthContextProps = {
   handleLogout: () => void;
   changePassword: (pass: string) => void;
   passwordChanged: boolean | null
-  setPasswordChanged: React.Dispatch<React.SetStateAction<boolean | null>>
+  setPasswordChanged: React.Dispatch<React.SetStateAction<boolean | null>>;
+  getUserData: () => void;
+  userData: DocumentData | null;
+  userDisplay: string | null
+  setUserDisplay: React.Dispatch<React.SetStateAction<string | null>>
+  changePFP: (event: any) => void
+  PFP: string | null
 };
 
 type AuthProviderProps = {
@@ -49,6 +57,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [registered, setRegistered] = useState<boolean>(false);
   const [loggedIn, setLoggedIn] = useState<boolean | null>(null);
   const [passwordChanged, setPasswordChanged] = useState<boolean | null>(null);
+  const [userData, setUserData] = useState<DocumentData | null>(null);
+  const [PFP, setPFP] = useState<string | null>(null);
+
+  const [userDisplay, setUserDisplay] = useState<string | null>(null);
 
   const usersCollections = collection(db, "users");
 
@@ -64,7 +76,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
               updateProfile(currentUser.user, {
                 displayName: name,
               });
-              // addDoc(usersCollections, {userId: currentUser.user.uid, creditLimit: 0, balance: 0, city: 'unknown', country: 'unknown'})
+              setUserDisplay(name);
+              addDoc(usersCollections, {userId: currentUser.user.uid, creditLimit: 0, balance: 0, city: 'unknown', country: 'unknown'})
               setRegistered(true);
             }
           );
@@ -109,17 +122,36 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }, [user])
 
-  const getUserData = useCallback(() => {
+  const getUserData = useCallback(async () => {
     if (user) {
       const data = query(usersCollections, where("userId", "==", user.uid));
+      await getDocs(data).then((docs) => {
+        docs.docs.map((doc) => setUserData(doc.data()))
+      })
     }
-  }, [])
+  }, [user])
+
+  const changePFP = useCallback(async (event: any) => {
+    if (user) {
+      const pfpRef = ref(storage, user.uid);
+      await uploadBytes(pfpRef, event.target.files[0]).then(() => {
+        getDownloadURL(pfpRef).then((url) => {
+          updateProfile(user, {
+            photoURL: url
+          })
+          setPFP(url);
+        });
+      });
+    }
+  }, [user]);
 
   useEffect(() => {
     setRegistered(false);
     onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         setUser(currentUser);
+        setUserDisplay(currentUser.displayName);
+        setPFP(currentUser.photoURL);
       }
       // AuthGuard
       if ((!currentUser && location.pathname === "/dashboard") || (!currentUser && location.pathname === "/transactions") || (!currentUser && location.pathname === "/profile")) {
@@ -148,7 +180,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
         setLoggedIn,
         changePassword,
         passwordChanged,
-        setPasswordChanged
+        setPasswordChanged,
+        getUserData,
+        userData,
+        userDisplay,
+        setUserDisplay,
+        changePFP,
+        PFP
       }}
     >
       {children}
