@@ -27,6 +27,20 @@ export const Container = styled.div`
             transition: all .3s ease;
         }
     }
+
+    @media (max-width: 900px){
+        width: 80vw;
+    }
+
+    @media (max-width: 650px){
+        width: 78vw;
+    }
+    @media (max-width: 470px){
+        width: 75vw;
+    }
+    @media (max-width: 340px){
+        width: 72vw;
+    }
 `
 
 export const FirstRow = styled.div`
@@ -52,6 +66,7 @@ export const CCLimit = styled.div`
             margin-top: .5rem;
         }
     }
+    
 
 `
 
@@ -76,6 +91,7 @@ export const CCLimitHeader = styled.div`
         border-radius: 50%;
         transition: all .3s ease;
     }
+
 
 `
 

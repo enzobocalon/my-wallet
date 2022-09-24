@@ -14,6 +14,19 @@ export const Container = styled.div`
     h1{
         font-size: 1.3rem;
     }
+    @media (max-width: 900px){
+        width: 80vw;
+    }
+
+    @media (max-width: 650px){
+        width: 78vw;
+    }
+    @media (max-width: 470px){
+        width: 75vw;
+    }
+    @media (max-width: 340px){
+        width: 72vw;
+    }
 `
 
 export const MenuItems = styled.div`
@@ -30,7 +43,15 @@ export const MenuItems = styled.div`
 
     svg{
         cursor: pointer;
+
     }
+
+    @media (max-width: 500px){
+        span{
+            display: none;
+        }
+    }
+
 `
 
 export const Profile = styled.div<IProps>`
@@ -88,12 +109,17 @@ export const ProfileModal = styled.div<IProps>`
         border-width: 0 5px 5px 5px;
         border-color: transparent transparent #1E1C2C transparent;
     }
+
+    span{
+        display: inline !important;
+    }
 `
 
 export const PMContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: .5rem;
+
 `
 
 export const PMItem = styled.div`
@@ -106,6 +132,5 @@ export const PMItem = styled.div`
     &:hover{
         background-color: #272836;
         border-radius: 5px;
-
     }
 `

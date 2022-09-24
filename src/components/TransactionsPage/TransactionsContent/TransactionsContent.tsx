@@ -10,7 +10,7 @@ import TransactionsList from "../TransactionsList/TransactionsList";
 const MainContent = () => {
   return (
     <S.Container>
-      <DashboardSidebar />
+      <DashboardSidebar locations="transaction"/>
       <Box sx={{ flexGrow: 1 }}>
         <Grid xs={12} sx={{ marginBottom: "1rem" }}>
           <DashboardHeader />

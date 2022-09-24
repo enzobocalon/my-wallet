@@ -13,7 +13,7 @@ const HomePageContainer = () => {
         <S.Container>    
             <S.LeftContainer>
                 <h1>Control your finances for free.</h1>
-                <span>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Distinctio quisquam quae facilis, esse autem natus sunt corporis dolorum accusamus nobis architecto vel, aliquid quod provident aperiam eius. In, laborum enim.</span>
+                <span>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</span>
                 <ul>
                     <li>
                         <IoMdWallet />

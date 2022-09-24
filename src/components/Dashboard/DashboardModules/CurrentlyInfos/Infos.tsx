@@ -25,19 +25,19 @@ const Infos = () => {
           <h1 style={{ color: "#FF3AF9" }}>
             {valueFormatter.format(values.incoming)}
           </h1>
-          <span>This month's incomings</span>
+          <span>Your all time incomings.</span>
         </S.CurrentInfo>
         <S.CurrentInfo>
           <h1 style={{ color: "#CE49E6" }}>
             {valueFormatter.format(values.expenses)}
           </h1>
-          <span>This month's expenses</span>
+          <span>Your all time expenses.</span>
         </S.CurrentInfo>
         <S.CurrentInfo>
           <h1 style={{ color: "#7A4CB3" }}>
             {valueFormatter.format(values.incoming - values.expenses)}
           </h1>
-          <span>This month's profit</span>
+          <span>Your all time profit.</span>
         </S.CurrentInfo>
       </S.Infos>
       <span id="transactions" onClick={() => navigate('/transactions')}>View Transactions</span>

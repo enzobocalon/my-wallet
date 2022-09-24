@@ -11,11 +11,19 @@ export const Container = styled.div`
     border-radius: 20px;
     box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
 
+    h1{
+        margin-top: 1rem;
+    }
+
     #transactions{
         font-size: .8rem;
         margin-top: 1rem;
         cursor: pointer;
         transition: all .3s ease;
+
+        @media (max-width: 900px){
+            margin-bottom: 1rem;
+        }
     }
 
     #transactions:hover{
@@ -23,25 +31,75 @@ export const Container = styled.div`
         transition: all .3s ease;
     }
 
+    @media (max-width: 900px){
+        width: 80vw;
+    }
+
+    @media (max-width: 650px){
+        width: 78vw;
+    }
+    @media (max-width: 470px){
+        width: 75vw;
+    }
+    @media (max-width: 340px){
+        width: 72vw;
+    }
 `
 
 export const Infos = styled.div`
     display: flex;
-    justify-content: space-evenly;
+    align-items: center;
     width: 100%;
-`
+    
+    @media (max-width: 900px){
+        flex-direction: column;
+    }
+    `
 
 export const CurrentInfo = styled.div`
-    padding-right: 2rem;
+    padding: 0 1rem;
     border-right: 1px solid #525399;
+    text-align: center;
+    width: 100%;
     h1{
-        font-size: clamp(0.7rem, 0.045rem + 3.27vw, 2.5rem);
+        font-size: 2.2rem;
+        margin-top: 0 !important;
     }
     span{
-        font-size: clamp(0.4rem, 0.182rem + 1.09vw, 1rem);
+        font-size: .8rem;
     }
 
     &:last-of-type{
         border-right: 1px solid transparent;
+
+        @media (max-width: 900px){
+            border-right: none;
+            border-bottom: none;
+        }
     }
+
+    @media (max-width: 1240px){
+        h1{
+            font-size: 2rem;
+        }
+    }
+    @media (max-width: 1180px){
+        h1{
+            font-size: 1.5rem;
+        }
+    }
+    @media (max-width: 1100px){
+        h1{
+            font-size: 1.2rem;
+        }
+    }
+
+    @media (max-width: 900px){
+        border-right: none;
+        border-bottom: 1px solid #525399;
+        margin: 0 1rem;
+        padding: 0;
+    }
+    
+
 `

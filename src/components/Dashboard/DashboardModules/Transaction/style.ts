@@ -19,10 +19,12 @@ export const Transaction = styled.div`
         cursor: pointer;
         transition: all .3s ease;
     }
+
 `
 
 export const TransactionLeft = styled.div`
     display: flex;
+    align-items: center;
 `
 
 export const TransactionIcon = styled.div<IProps>`
@@ -33,6 +35,12 @@ export const TransactionIcon = styled.div<IProps>`
     border-radius: 12px;
     height: 50px;
     width: 50px;
+
+    @media (max-width: 400px){
+        height: fit-content;
+        width: fit-content;
+        padding: 5px;
+    }
 `
 
 export const TransactionInfos = styled.div`
@@ -40,15 +48,30 @@ export const TransactionInfos = styled.div`
     flex-direction: column;
     justify-content: center;
     margin-left: 1rem;
+    
+    @media (max-width: 400px){
+        margin-left: .4rem;
+    }
+    @media (max-width: 370px){
+        margin-left: 0;
+    }
 `
 
 export const TransactionRight = styled.div`
     display: flex;
     align-items: center;
     gap: 1rem;
+    text-align: right;
 
     svg{
         opacity: 0;
         pointer-events: none;
+    }
+    span{
+        width: 100%;
+    }
+
+    @media (max-width: 400px){
+        gap: .2rem;
     }
 `

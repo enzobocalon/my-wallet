@@ -1,18 +1,33 @@
-import React, {FC, useContext} from 'react'
+import React, {FC, useContext, useState, useEffect} from 'react'
 import {Link} from 'react-router-dom'
 import * as S from './styles'
 import logo from '../../../assets/logo.svg'
+import icon from '../../../assets/icon.svg';
 import { BiLogOut } from 'react-icons/bi'
 import placeholderprofile from '../../../assets/placeholderprofile.jpg'
 import { AuthContext } from "../../../context/AuthContext"
 
 const Header:FC = () => {
     const { user, handleLogout } = useContext(AuthContext)
+    const mql = window.matchMedia("(max-width: 525px)")
+    const [media, setMedia] = useState<boolean>(false);
+  
+    mql.addEventListener("change", () => {
+      mql.matches ? setMedia(true) : setMedia(false);
+    })
+  
+    useEffect(() => {
+     if (mql.matches) {
+      setMedia(true);
+     }  
+    })
   return (
     <S.HeaderWrapper>
 
         <S.HeaderFirstCol>
-            <img src={logo} />
+            <Link to = '/'>
+            <img src={media ? icon : logo} />
+            </Link>
             <div>
                 <ul>
                     <Link to ='/'>

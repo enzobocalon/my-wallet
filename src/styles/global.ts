@@ -14,7 +14,6 @@ export const GlobalStyle = createGlobalStyle`
         width: 100%;
         background-color: #1f1d2c;
         overflow-x: hidden;
-        overflow-y: auto;
         color: white;
     }
 

@@ -1,18 +1,39 @@
 import styled from "styled-components";
+import logo from "../../../assets/logo.svg";
+import icon from '../../../assets/icon.svg';
+
 
 interface IProps {
     active?: boolean;
+    locations?: string;
 }
 
-export const Container = styled.div`
+export const Container = styled.div<IProps>`
     background-color: #1E1D2D;
     min-width: 13vw;
-    max-width: 13vw;
     height: 100vh;
 
     z-index: 0;
     border-right: 1px solid #525399;
     border-left: 8px solid transparent;
+
+    @media (max-width: 1400px) {
+        min-width: 15vw;
+    }
+
+    @media (max-width: 1200px) {
+        min-width: 18vw;
+    }
+
+    @media (max-width: 1000px) {
+        min-width: 20vw
+    }
+
+    @media (max-width: 900px){
+        min-width: 13vw;
+        height: ${props => props.locations === 'dashboard' ? 'auto' : '100vh'};
+    }
+
 `
 
 export const MenuContainer = styled.div`
@@ -37,6 +58,10 @@ export const MenuAlign = styled.div`
         a{
             width: 90%;
         }
+
+        @media (max-width: 900px){
+            gap: 3rem;
+        }
     `
 
 export const DashboardCol = styled.div`
@@ -44,13 +69,19 @@ export const DashboardCol = styled.div`
     `
 
 export const LogoRow = styled.div`
-    text-align: center;
     height: 100px;
     width: 100%;
-    img{
-        width: 100%;
-        height: 100%;
-        transform: scale(1.2);
+    background-image: url(${logo});
+    background-size: cover;
+    background-position: center;
+
+    @media (max-width: 900px){
+        background-image: url(${icon});
+        background-size: 50%;
+        background-repeat: no-repeat;
+    }
+    @media (max-width: 500px){
+        background-size: 70%;
     }
     `
 
@@ -101,6 +132,26 @@ export const MenuRow = styled.div<IProps>`
         }
     }
 
+    @media (max-width: 900px){
+        padding: 0 5px;
+        span{
+            display: none;
+        }
+        svg{
+            width: 75%;
+            height: 75%;
+        }
+    }
+
+    @media (max-width: 400px){
+        padding: 0;
+
+        svg{
+            width: 60%;
+            height: 60%;
+        }
+    }
+
 `
 
 export const Logout = styled.div`
@@ -116,5 +167,24 @@ export const Logout = styled.div`
     &:hover{
         background-color: #272836;
         transition: all .3s ease;
+    }
+
+    @media (max-width: 900px){
+        padding: 0 5px;
+        svg{
+            margin-right: 10px;
+            width: 75%;
+            height: 75%;
+        }
+    }
+
+    @media (max-width: 400px){
+        padding: 0;
+
+        svg{
+            margin-right: 10px;
+            width: 50%;
+            height: 50%;
+        }
     }
 `

@@ -2,24 +2,24 @@ import React, { useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import * as S from "./style";
 
-import logo from "../../../assets/logo.svg";
-
 import { MdDashboard } from "react-icons/md";
 import { BiTransferAlt, BiLogOut } from "react-icons/bi";
 import { AiOutlineUser } from "react-icons/ai";
 import { AuthContext } from "../../../context/AuthContext";
 
-const DashboardSidebar = () => {
+interface IProps {
+  locations: string
+}
+
+const DashboardSidebar = ({locations}:IProps) => {
   const { handleLogout } = useContext(AuthContext);
   const location = useLocation();
 
   return (
-    <S.Container>
+    <S.Container locations={locations}>
       <S.MenuContainer>
         <S.DashboardCol>
-          <S.LogoRow>
-            <img src={logo} />
-          </S.LogoRow>
+          <S.LogoRow></S.LogoRow>
           <S.MenuAlign>
             <Link to={"/dashboard"}>
               {location.pathname === "/dashboard" ? (

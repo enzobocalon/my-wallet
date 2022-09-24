@@ -28,7 +28,7 @@ const DashboardHeader = () => {
       </div>
 
       <S.MenuItems>
-        <MdNotifications size={20} />
+        <MdNotifications size={20} id='notifications'/>
         <S.Profile showing={profileModal}>
           <img src={`${PFP}`} />
           <div>

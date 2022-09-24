@@ -24,6 +24,23 @@ export const HeaderFirstCol = styled.div`
         gap: 2rem;
         list-style: none;
     }
+
+    @media (max-width: 900px){
+        ul{
+            display: none;
+        }
+    }
+    @media (max-width: 525px){
+        img{
+            width: 90% !important;
+        }
+    }
+
+    @media (max-width: 330px){
+        img{
+            width: 50% !important;
+        }
+    }
 `
 
 export const HeaderSecondCol = styled.div`
@@ -42,6 +59,7 @@ export const HeaderSecondCol = styled.div`
         width: 50px;
         border-radius: 12px;
     }
+
 `
 
 export const LoginButton = styled.button`

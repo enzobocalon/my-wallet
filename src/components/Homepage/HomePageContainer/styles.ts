@@ -6,6 +6,10 @@ export const Container = styled.main`
     display: flex;
     align-items: center;
     justify-content: center;
+
+    @media (max-width: 900px){
+        flex-direction: column-reverse;
+    }
 `
 
 
@@ -55,6 +59,19 @@ export const LeftContainer = styled.div`
         opacity: .9;
         transition: all .3s ease-in;
     }
+
+    @media (max-width: 900px){
+        width: 100%;
+        padding: 0 1rem;
+
+        h1{
+            font-size: 2rem;
+        }
+
+        li{
+            font-size: .8rem;
+        }
+    }
 `
 
 export const RightContainer = styled.div`
@@ -65,6 +82,10 @@ export const RightContainer = styled.div`
     justify-content: center;
 
     img {
+        width: 100%;
+    }
+
+    @media (max-width: 400px){
         width: 100%;
     }
 `

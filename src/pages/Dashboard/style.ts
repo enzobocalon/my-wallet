@@ -5,7 +5,6 @@ export const GlobalDashboardStyle = createGlobalStyle`
         position: relative;
         min-height: 100vh;
         width: 100%;
-        overflow: hidden;
         background-color: #272836 !important;
     }
 `

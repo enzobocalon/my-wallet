@@ -9,7 +9,7 @@ const ProfileContent = () => {
   return (
     <>
       <S.Container>
-        <DashboardSidebar />
+        <DashboardSidebar locations="profile"/>
         <Box sx={{ flexGrow: 1 }}>
         <Grid container>
           <Grid xs={12} sx={{ marginBottom: "1rem" }}>

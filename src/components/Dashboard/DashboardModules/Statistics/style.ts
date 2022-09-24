@@ -12,4 +12,18 @@ export const Container = styled.div`
     h1{
         font-size: 1.4rem;
     }
+
+    @media (max-width: 900px){
+        width: 80vw;
+    }
+
+    @media (max-width: 650px){
+        width: 78vw;
+    }
+    @media (max-width: 470px){
+        width: 75vw;
+    }
+    @media (max-width: 340px){
+        width: 72vw;
+    }
 `
