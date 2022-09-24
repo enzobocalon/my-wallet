@@ -29,3 +29,4 @@ This is the first final version of InWallet, aka InWallet V1.0. The main part of
 As I said before, this project was built for studying, so it will no longer be my main project and I will move on into others projects. However, I sill plan to change and improve InWallet whenever I have time. But, just as I said in the paragraph above, IT IS FULLY FUNCTIONAL and CAN be used.
 
 So, if you still want to try it with all the problems I related in the last section, be welcome!
+
