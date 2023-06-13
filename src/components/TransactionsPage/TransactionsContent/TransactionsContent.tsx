@@ -2,7 +2,6 @@ import React from "react";
 import DashboardSidebar from "../../Dashboard/DashboardSidebar/DashboardSidebar";
 import * as S from "./style";
 
-import { Box, Grid } from "@mui/material";
 import DashboardHeader from "../../Dashboard/DashboardModules/DashboardHeader/DashboardHeader";
 import TransactionsHeader from "../TransactionsHeader/TransactionsHeader";
 import TransactionsList from "../TransactionsList/TransactionsList";
