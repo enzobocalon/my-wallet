@@ -10,23 +10,15 @@ interface IProps {
 
 export const Container = styled.div<IProps>`
     background-color: #1E1D2D;
-    min-width: 13vw;
+    min-width: 15vw;
     height: 100vh;
 
     z-index: 0;
     border-right: 1px solid #525399;
     border-left: 8px solid transparent;
 
-    @media (max-width: 1400px) {
-        min-width: 15vw;
-    }
-
-    @media (max-width: 1200px) {
-        min-width: 18vw;
-    }
-
-    @media (max-width: 1000px) {
-        min-width: 20vw
+    @media (max-width: 1300px) {
+        min-width: 20vw;
     }
 
     @media (max-width: 900px){

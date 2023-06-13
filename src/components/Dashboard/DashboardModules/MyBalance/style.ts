@@ -19,25 +19,6 @@ export const Container = styled.div`
         font-size: 2rem;
     }
 
-    @media (max-width: 1150px){
-        h1{
-            font-size: 1.5rem;
-        }
-    }
-
-    @media (max-width: 900px){
-        width: 80vw;
-    }
-
-    @media (max-width: 650px){
-        width: 78vw;
-    }
-    @media (max-width: 470px){
-        width: 75vw;
-    }
-    @media (max-width: 340px){
-        width: 72vw;
-    }
 `
 
 export const CCFooter = styled.div`

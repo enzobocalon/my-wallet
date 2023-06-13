@@ -27,28 +27,26 @@ const MainContent = () => {
   return (
     <S.Container>
       <DashboardSidebar locations="dashboard"/>
-      <Box sx={{ flexGrow: 1 }}>
-        <Grid container>
-          <Grid xs={12} sx={{ marginBottom: "1rem" }}>
-            <DashboardHeader />
-          </Grid>
-          <Grid xs={media ? 12 : 3} sx={{ marginRight: "1rem"}} id="balance">
+      <S.Wrapper>
+      <DashboardHeader />
+        <S.GridContainer>
+          <S.GridItem>
             <MyBalance />
-          </Grid>
+          </S.GridItem>
 
-          <Grid xs={media ? 12 : 8} sx={{marginRight: "1rem"}}>
+          <S.GridItem>
             <Infos />
-          </Grid>
+          </S.GridItem>
 
-          <Grid xs={media ? 12 : 7} sx={{ marginTop: "1rem", marginRight: "1rem" }}>
+          <S.GridItem>
             <TransactionsInfos />
-          </Grid>
+          </S.GridItem>
 
-          <Grid xs={media ? 12 : 4} sx={{ marginTop: "1rem", marginRight: "1rem" }}>
+          <S.GridItem>
             <Statistics />
-          </Grid>
-        </Grid>
-      </Box>
+          </S.GridItem>
+        </S.GridContainer>
+      </S.Wrapper>
     </S.Container>
   );
 };

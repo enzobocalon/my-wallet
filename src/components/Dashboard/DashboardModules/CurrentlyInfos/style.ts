@@ -17,7 +17,7 @@ export const Container = styled.div`
 
     #transactions{
         font-size: .8rem;
-        margin-top: 1rem;
+        margin-block: 1rem;
         cursor: pointer;
         transition: all .3s ease;
 
@@ -30,20 +30,6 @@ export const Container = styled.div`
         color: rgb(254,97,82);
         transition: all .3s ease;
     }
-
-    @media (max-width: 900px){
-        width: 80vw;
-    }
-
-    @media (max-width: 650px){
-        width: 78vw;
-    }
-    @media (max-width: 470px){
-        width: 75vw;
-    }
-    @media (max-width: 340px){
-        width: 72vw;
-    }
 `
 
 export const Infos = styled.div`
@@ -51,7 +37,7 @@ export const Infos = styled.div`
     align-items: center;
     width: 100%;
     
-    @media (max-width: 900px){
+    @media (max-width: 1300px){
         flex-direction: column;
     }
     `

@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import * as S from "./style";
 import { Select, MenuItem, SelectChangeEvent } from "@mui/material";
+import { AiOutlinePlus, AiOutlineFilter } from 'react-icons/ai';
 import AddTransaction from "../AddTransaction/AddTransaction";
 import { DBContext } from "../../../context/DBContext";
 
@@ -22,6 +23,7 @@ const TransactionsHeader = () => {
     <S.Container>
       {openModal ? <AddTransaction handleModal={handleModal} /> : ""}
       <S.LeftContainer>
+        <AiOutlineFilter size={20}/>
         <span>Show</span>
         <Select
           value={option}
@@ -59,7 +61,8 @@ const TransactionsHeader = () => {
       </S.LeftContainer>
       <S.RightContainer>
         <S.NewTransaction onClick={handleModal}>
-          Add New Transaction
+          <span>Add New Transaction</span>
+          <AiOutlinePlus size={20}/>
         </S.NewTransaction>
       </S.RightContainer>
     </S.Container>

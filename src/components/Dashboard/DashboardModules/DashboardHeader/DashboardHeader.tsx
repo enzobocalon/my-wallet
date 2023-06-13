@@ -29,15 +29,14 @@ const DashboardHeader = () => {
 
       <S.MenuItems>
         <MdNotifications size={20} id='notifications'/>
-        <S.Profile showing={profileModal}>
-          <img src={`${PFP}`} />
+        <S.Profile showing={profileModal} onClick={() => setProfileModal((prev) => !prev)}>
+          <img src={`${PFP}`} alt='profile icon'/>
           <div>
-            <p>{userDisplay}</p>
+            <p id="name">{userDisplay}</p>
             <span>{user?.email}</span>
           </div>
           <RiArrowDropDownLine
             size={20}
-            onClick={() => setProfileModal((prev) => !prev)}
             id="profileArrow"
           />
         </S.Profile>

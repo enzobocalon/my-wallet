@@ -183,8 +183,7 @@ export function DBProvider({ children }: DBProviderProps) {
       value: number,
       limit: boolean,
       balance: boolean,
-      date: Date
-    ) => {
+      date: Date) => {
       if (user) {
         const newDate = formatDate(date).toString();
         const transactionsCollection = collection(db, "transactions");

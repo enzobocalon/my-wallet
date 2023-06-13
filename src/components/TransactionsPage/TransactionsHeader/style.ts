@@ -11,7 +11,20 @@ export const LeftContainer = styled.div`
     display: flex;
     align-items: center;
     gap: 1rem;
-    width: 50%;
+
+    svg {
+        display: none;
+    }
+
+    @media (max-width: 900px) {
+        > span {
+            display: none;
+        }
+
+        svg {
+            display: block;
+        }
+    }
 `
 export const RightContainer = styled.div`
     margin-right: 2rem;
@@ -29,8 +42,22 @@ export const NewTransaction = styled.button`
     transition: all .3s ease;
     box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
 
+    svg {
+        display: none;
+    }
+
     &:hover{
     background-color: rgba(82,83,153,.9);
     transition: all .3s ease;
+    }
+
+    @media (max-width: 900px) {
+        span {
+            display: none;
+        }
+
+        svg {
+            display: block;
+        }
     }
 `

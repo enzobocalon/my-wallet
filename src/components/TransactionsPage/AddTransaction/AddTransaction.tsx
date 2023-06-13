@@ -136,11 +136,11 @@ const AddTransaction = ({ handleModal }: IProps) => {
                 />
               </S.Calendar>
             </div>
-            <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+          </S.FormField>
+          <S.FormField>
               <span>Value</span>
               <input placeholder="2000" type="text" ref={valueRef} />
-            </div>
-          </S.FormField>
+            </S.FormField>
           {renderQuestion ? (
             <S.FormField>
               <span>Counts towards your credit card limit?</span>

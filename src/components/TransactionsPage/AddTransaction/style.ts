@@ -11,13 +11,15 @@ export const BlackOutLayer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    padding-inline: 1rem;
 `
 
 export const Container = styled.div`
     z-index: 12;
     background-color: #2E313E;
     height: fit-content;
-    width: 30%;
+    width: 100%;
+    max-width: 500px;
     border-radius: 12px;
     padding: 1rem;
     box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
@@ -52,11 +54,22 @@ export const FormField = styled.div`
     justify-content: space-between;
     gap: 1rem;
 
+    > div {
+        width: 100%;
+    }
+
     input[type=text] {
         border: none;
         border-radius: 8px;
         padding: 2px 1rem;
         width: 100%;
+    }
+
+    @media (max-width: 400px) {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+
     }
 `
 
@@ -82,6 +95,11 @@ export const AddTransactionButton = styled.button`
 `
 
 export const Calendar = styled.div`
+    width: 100%;
+
+    input {
+        width: 100%;
+    }
     .react-datepicker__day--selected {
         background-color: inherit;
         color: rgb(255, 58, 249) !important;
@@ -127,5 +145,4 @@ export const Calendar = styled.div`
     .react-datepicker__navigation{
         top: 6px;
     }
-
 `

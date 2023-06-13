@@ -14,18 +14,9 @@ export const Container = styled.div`
     h1{
         font-size: 1.3rem;
     }
-    @media (max-width: 900px){
-        width: 80vw;
-    }
 
-    @media (max-width: 650px){
-        width: 78vw;
-    }
-    @media (max-width: 470px){
-        width: 75vw;
-    }
-    @media (max-width: 340px){
-        width: 72vw;
+    @media (max-width: 450px) {
+        flex-direction: column;
     }
 `
 
@@ -43,12 +34,32 @@ export const MenuItems = styled.div`
 
     svg{
         cursor: pointer;
-
     }
 
-    @media (max-width: 500px){
-        span{
-            display: none;
+    @media (max-width: 600px){
+        > div {
+            span{
+                display: none;
+            }
+        } 
+    }
+
+    @media (max-width: 450px) {
+        width: 100%;
+        justify-content: space-between;
+        margin-top: .5rem;
+        border-bottom: 1px solid #525399;
+        padding-block: .5rem;
+
+        >div {
+            #name {
+                display: none;
+            }
+
+            >svg {
+                display: none;
+            }
+            gap: .5rem;
         }
     }
 
@@ -60,6 +71,7 @@ export const Profile = styled.div<IProps>`
     height: fit-content;
     gap: 1rem;
     margin-right: 2rem;
+    cursor: pointer;
     img {
         width: 50px;
         height: 50px;

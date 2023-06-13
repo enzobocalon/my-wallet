@@ -11,17 +11,17 @@ const MainContent = () => {
   return (
     <S.Container>
       <DashboardSidebar locations="transaction"/>
-      <Box sx={{ flexGrow: 1 }}>
-        <Grid xs={12} sx={{ marginBottom: "1rem" }}>
-          <DashboardHeader />
-        </Grid>
-        <Grid xs={12}>
-          <TransactionsHeader />
-        </Grid>
-        <Grid xs={12}>
-          <TransactionsList />
-        </Grid>
-      </Box>
+        <S.Wrapper>
+          <S.Item>
+            <DashboardHeader />
+          </S.Item>
+          <S.Item> 
+            <TransactionsHeader />
+          </S.Item>
+          <S.Item >
+            <TransactionsList />
+          </S.Item>
+        </S.Wrapper>
     </S.Container>
   );
 };
